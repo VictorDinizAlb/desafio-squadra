@@ -1,0 +1,126 @@
+UF /uf
+    campos: codigoUF, sigla, nome, status
+
+    get - consultar - 200
+        listar todos
+        consultar pela sigla (idêntica)
+        consultar pelo codigoUF (idêntico)
+        
+    post - gravar - 201
+        um por vez
+        codigoUF (deve ser gerado via auto incremento  ou sequence)
+        dados que serão passados:
+        sigla
+        nome
+        status
+        
+    PUT - alterar - 200
+        dados que serão passados:
+        codigoUF
+        sigla
+        nome
+        status
+    
+    delete - deletar (OPCIONAL) - 200
+        dados que serão passados:
+        codigoUF
+
+MUNICIPIO /municipio
+    campos: codigoMunicipio, codigoUF, nome, status
+
+    GET - consultar - 200
+        listar todos
+        listar pelo codigoUF (idêntico)
+        consultar pelo codigoMunicipio (idêntico)
+        consultar pelo nome (idêntico)
+        
+    POST - gravar -201
+        deve ser gravado um por vez (JSON)
+        codigoMunicipio (deve ser gerado via auto incremento  ou sequence)
+        dados que serão passados:
+        codigoUF
+        nome
+        status
+        
+    PUT - alterar (JSON) - 200
+        dados que serão passados:
+        codigoMunicipio
+        codigoUF
+        nome
+        status
+    
+    DELETE - deletar (OPCIONAL) - 200
+        dados que serão passados:
+        codigoMunicipio
+        
+BAIRRO /bairro
+    campos: codigoBairro, codigoMunicipio, nome, status
+
+    GET - consultar - 200
+        listar todos
+        listar pelo codigoMunicipio (idêntico)
+        consultar pelo codigoBairro (idêntico)
+        
+    POST - gravar - 201
+        deve ser gravado um por vez
+        codigoBairro (deve ser gerado via auto incremento  ou sequence)
+        dados que serão passados:
+        codigoMunicipio
+        nome
+        status
+        
+    PUT - 200
+        dados que serão passados:
+        codigoBairro
+        codigoMunicipio
+        nome
+        status
+        
+    DELETE - deletar (OPCIONAL) - 200
+        dados que serão passados:
+        codigoBairro
+        
+
+PESSOA /pessoa
+    campos: codigoPessoa, nome, sobrenome, idade, login, senha, status
+    [campos endereço]: codigoEndereco, codigoPessoa, codigoBairro, nomeRua, numero, complemento, cep
+
+    GET - consultar
+        listar todos (trago apenas os dados da tabela pessoa)
+        consultar pelo codigoPessoa (idêntico) (trago os dados de todas as tabelas vinculadas ao registro de pessoa)
+        
+    POST - gravar
+        deve ser gravado um por vez
+        codigoPessoa (deve ser gerado via auto incremento  ou sequence)
+        dados que serão passados:
+        nome, sobrenome, idade, login, senha, status
+        array de endereços: codigoBairro, nomeRua, numero, complemento, cep
+        
+    PUT
+        dados que serão passados:
+        codigoPessoa, nome, sobrenome, idade, login, senha, status
+        array de endereços: codigoEndereco, codigoPessoa, codigoBairro, nomeRua, numero, complemento, cep
+        
+    DELETE - deletar (OPCIONAL)
+        dados que serão passados:
+        codigoPessoa
+        
+ERRO: EXEMPLO - STATUS 404
+{
+    "status": 404,
+    "mensagem": "Nao existe nenhuma UF com este codigo."
+}
+
+
+
+ormconfig.json:
+
+{
+  "type": "oracle",
+  "host": "localhost",
+  "port": 1521,
+  "username": "C##VICTOR",
+  "password": "senha",
+  "database": "xe",
+  "entity": ["./src/modules/ufs/typeorm/entities/*.ts"]
+}
