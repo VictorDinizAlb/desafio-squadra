@@ -1,1 +1,1 @@
-# desafio-squadra
+# curso-api-vendas

@@ -1,0 +1,9 @@
+{
+  "type": "oracle",
+  "host": "localhost",
+  "port": 1521,
+  "username": "C##VICTOR",
+  "password": "senha",
+  "database": "xe",
+  "entity": ["./src/modules/ufs/typeorm/entities/*.ts"]
+}

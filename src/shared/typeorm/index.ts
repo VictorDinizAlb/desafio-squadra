@@ -1,13 +1,16 @@
-import { createConnection } from "typeorm";
+import { createConnection } from 'typeorm';
 
-createConnection();
-console.log('chegou');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+try {
+  createConnection();
+} catch (err) {
+  console.error(err);
+}
+
 // const oracledb = require('oracledb');
 
 // oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
 
-// const mypw = 'senha'  // set mypw to the hr schema password
+// const mypw = 'adv091299!'  // set mypw to the hr schema password
 
 // async function run() {
 
@@ -16,6 +19,8 @@ console.log('chegou');
 //   try {
 //     connection = await oracledb.getConnection( {
 //       user          : "C##VICTOR",
+//       user          : "system",
+
 //       password      : mypw,
 //       connectString : "localhost/xe"
 //     });
