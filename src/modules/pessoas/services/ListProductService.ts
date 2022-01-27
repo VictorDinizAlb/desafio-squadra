@@ -8,7 +8,6 @@
 
 //     const products = await productsRepository.find();
 
-
 //     return products;
 //   }
 // }

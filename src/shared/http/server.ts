@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use(routes);
 
-// Middleware:
+//Middleware:
 app.use(
   (error: Error, resquest: Request, response: Response, next: NextFunction) => {
     if (error instanceof AppError) {

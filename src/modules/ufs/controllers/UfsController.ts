@@ -1,41 +1,58 @@
-import { Request, Response } from "express";
-import CriarUfService from "../services/CriarUfService";
+import { Request, Response } from 'express';
+import CriarUfService from '../services/CriarUfService';
 // import DeleteProductService from "../services/DeleteProductService";
-// import ListProductService from "../services/ListProductService";
-// import ShowProductService from "../services/ShowProductService";
+import ListarUfService from '../services/ListarUfService';
+import ConsultarUfService from '../services/ConsultarUfService';
 // import UpdateProductService from "../services/UpdateProductService";
 
 export default class UfsController {
+  public async listar(request: Request, response: Response): Promise<Response> {
+    const { codigoUF, sigla } = request.query;
 
-  // public async index(request: Request, response: Response): Promise<Response>{
-  //   const listProducts = new ListProductService();
+    if (codigoUF !== undefined) {
+      const ufPorCodigo = new ConsultarUfService();
 
-  //   const products = await listProducts.execute();
+      const uf = await ufPorCodigo.procurarPorCodigo(codigoUF);
 
-  //   return response.json(products);
+      return response.json(uf);
+    } else if (sigla !== undefined) {
+      const ufPorSigla = new ConsultarUfService();
+
+      const uf = await ufPorSigla.procurarPorSigla(sigla.toString());
+
+      return response.json(uf);
+    } else {
+      const listaUfs = new ListarUfService();
+
+      const ufs = await listaUfs.execute();
+
+      return response.json(ufs);
+    }
+  }
+
+  // public async show(request: Request, response: Response): Promise<Response> {
+  //   const { codigoUF } = request.params;
+  //   const CODIGO_UF = codigoUF;
+
+  //   const showUf = new ConsultarUfService();
+
+  //   const uf = await showUf.execute({ CODIGO_UF });
+
+  //   return response.json(uf);
   // }
 
-  // public async show(request: Request, response: Response): Promise<Response>{
-  //   const { id } = request.params;
-
-  //   const showProduct = new ShowProductService();
-
-  //   const product = await showProduct.execute({id});
-
-  //   return response.json(product);
-  // }
-
-  public async gravar(request: Request, response: Response): Promise<Response>{
-    const {sigla, nome, status} = request.body;
-    let SIGLA = sigla;
-    let NOME = nome;
-    let STATUS = status;
+  public async gravar(request: Request, response: Response): Promise<Response> {
+    const { sigla, nome, status } = request.body;
+    const SIGLA = sigla;
+    const NOME = nome;
+    const STATUS = status;
+    const CODIGO_UF = 6;
 
     const criarUf = new CriarUfService();
 
-    const product = await criarUf.execute({SIGLA, NOME, STATUS});
+    const uf = await criarUf.execute({ CODIGO_UF, SIGLA, NOME, STATUS });
 
-    return response.json(product);
+    return response.json(uf);
   }
 
   // public async update(request: Request, response: Response): Promise<Response>{
@@ -60,5 +77,3 @@ export default class UfsController {
   //   return response.json([]);
   // }
 }
-
-

@@ -1,9 +1,9 @@
-import {EntityRepository, Repository} from "typeorm";
-import Municipio from "../entities/Municipio";
+import { EntityRepository, Repository } from 'typeorm';
+import Municipio from '../entities/Municipio';
 
 @EntityRepository(Municipio)
 export class MunicipioRepository extends Repository<Municipio> {
-  public async findByName(name: string): Promise<Municipio | undefined>{
+  public async findByName(name: string): Promise<Municipio | undefined> {
     const municipio = this.findOne({
       where: {
         name,
@@ -11,7 +11,5 @@ export class MunicipioRepository extends Repository<Municipio> {
     });
 
     return municipio;
-
   }
-
 }
