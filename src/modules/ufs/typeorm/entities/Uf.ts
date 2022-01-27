@@ -1,8 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { NextVal, EntityWithSequence } from 'typeorm-sequence';
 
 @Entity('TB_UF') //nome da tabela no banco
-class Uf {
-  @PrimaryGeneratedColumn('increment')
+class Uf extends EntityWithSequence{
+
+  @PrimaryColumn('int')
   CODIGO_UF: number;
 
   @Column()

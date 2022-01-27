@@ -22,4 +22,11 @@ export class UfRepository extends Repository<Uf> {
 
     return uf;
   }
+
+  public async buscarSequence(): Promise<any>{
+    const nextVal = await this.query(`select SEQUENCE_UF.NEXTVAL as id from dual`)
+    const id = nextVal[0].ID;
+
+    return id;
+  }
 }
