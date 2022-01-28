@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import CriarUfService from '../services/CriarUfService';
-// import DeleteProductService from "../services/DeleteProductService";
 import ListarUfService from '../services/ListarUfService';
 import ConsultarUfService from '../services/ConsultarUfService';
-// import UpdateProductService from "../services/UpdateProductService";
+import AlterarUfService from '../services/AlterarUfService';
+import DeletarUfService from '../services/DeletarUfService';
+import AppError from '@shared/errors/AppError';
 
 export default class UfsController {
   public async listar(request: Request, response: Response): Promise<Response> {
@@ -30,17 +31,6 @@ export default class UfsController {
     }
   }
 
-  // public async show(request: Request, response: Response): Promise<Response> {
-  //   const { codigoUF } = request.params;
-  //   const CODIGO_UF = codigoUF;
-
-  //   const showUf = new ConsultarUfService();
-
-  //   const uf = await showUf.execute({ CODIGO_UF });
-
-  //   return response.json(uf);
-  // }
-
   public async gravar(request: Request, response: Response): Promise<Response> {
     const { sigla, nome, status } = request.body;
     const SIGLA = sigla;
@@ -49,31 +39,57 @@ export default class UfsController {
     const CODIGO_UF = 1;
 
     const criarUf = new CriarUfService();
+    const listaUf = new ListarUfService();
 
-    const uf = await criarUf.execute({ CODIGO_UF, SIGLA, NOME, STATUS });
+    const uf = await criarUf.execute({ SIGLA, NOME, STATUS });
+
+    if (uf instanceof AppError) {
+      return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+    } else {
+      const listaUfAtual = await listaUf.execute();
+      return response.status(201).json(listaUfAtual);
+    }
+  }
+
+  public async alterar(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { codigoUF, nome, sigla, status } = request.body;
+    const CODIGO_UF = codigoUF;
+    const NOME = nome;
+    const SIGLA = sigla;
+    const STATUS = status;
+
+    const alterarUf = new AlterarUfService();
+
+    const uf = await alterarUf.execute({ CODIGO_UF, NOME, SIGLA, STATUS });
 
     return response.json(uf);
   }
 
-  // public async update(request: Request, response: Response): Promise<Response>{
-  //   const {name, price, quantity} = request.body;
-  //   const {id} = request.params;
+  public async deletar(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { CODIGO_UF } = request.params;
 
-  //   const updateProduct = new UpdateProductService();
+    const deletaUf = new DeletarUfService();
+    const listaUfs = new ListarUfService();
 
-  //   const product = await updateProduct.execute({id, name, price, quantity});
+    const result = await deletaUf.execute(CODIGO_UF);
 
-  //   return response.json(product);
-
-  // }
-
-  // public async delete(request: Request, response: Response): Promise<Response>{
-  //   const {id} = request.params;
-
-  //   const deleteProduct = new DeleteProductService();
-
-  //   await deleteProduct.execute({id});
-
-  //   return response.json([]);
-  // }
+    if (result) {
+      return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+    } else {
+      const listaUfsAtual = await listaUfs.execute();
+      return response.json(listaUfsAtual);
+    }
+  }
 }
