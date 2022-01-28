@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('TB_UF') //nome da tabela no banco
-class Uf extends EntityWithSequence {
+class Uf {
   @PrimaryColumn('int')
   CODIGO_UF: number;
 

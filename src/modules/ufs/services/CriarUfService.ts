@@ -26,8 +26,6 @@ class CriarUfService {
 
     const CODIGO_UF = await ufRepository.buscarSequence();
 
-    console.log(CODIGO_UF);
-
     const uf = ufRepository.create({
       CODIGO_UF,
       SIGLA,

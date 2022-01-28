@@ -3,6 +3,16 @@ import Uf from '../entities/Uf';
 
 @EntityRepository(Uf)
 export class UfRepository extends Repository<Uf> {
+  public async procurarPorCodigo(CODIGO_UF: number): Promise<Uf | undefined> {
+    const uf = this.findOne({
+      where: {
+        CODIGO_UF,
+      },
+    });
+
+    return uf;
+  }
+
   public async procurarPorSigla(SIGLA: string): Promise<Uf | undefined> {
     const uf = this.findOne({
       where: {
@@ -13,10 +23,10 @@ export class UfRepository extends Repository<Uf> {
     return uf;
   }
 
-  public async procurarPorCodigo(codigoUF: number): Promise<Uf | undefined> {
+  public async procurarPorNome(NOME: string): Promise<Uf | undefined> {
     const uf = this.findOne({
       where: {
-        codigoUF,
+        NOME,
       },
     });
 
