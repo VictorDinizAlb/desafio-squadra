@@ -46,23 +46,14 @@ export default class UfsController {
     const SIGLA = sigla;
     const NOME = nome;
     const STATUS = status;
+    const CODIGO_UF = 1;
 
     const criarUf = new CriarUfService();
 
-    await criarUf.execute({ SIGLA, NOME, STATUS });
+    const uf = await criarUf.execute({ CODIGO_UF, SIGLA, NOME, STATUS });
 
-    const listaUfs = new ListarUfService();
-
-      const ufs = await listaUfs.execute();
-
-      return response.json(ufs);
+    return response.json(uf);
   }
-
-  // public async teste(): Promise<any>{
-  //   const ufSequence = new CriarUfService();
-  //   const id = await ufSequence.buscarId();
-
-  // }
 
   // public async update(request: Request, response: Response): Promise<Response>{
   //   const {name, price, quantity} = request.body;
