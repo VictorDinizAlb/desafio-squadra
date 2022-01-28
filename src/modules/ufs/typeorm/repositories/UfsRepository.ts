@@ -82,7 +82,6 @@ export class UfRepository extends Repository<Uf> {
       }
 
       return listaUfs;
-      // console.log('Array de objetos: \n', resultado);
     }
   }
 }
