@@ -18,7 +18,7 @@ class CriarUfService {
     const ufRepository = getCustomRepository(UfRepository);
     const ufExists = await ufRepository.procurarPorSigla(SIGLA);
 
-    if (ufExists) {
+    if (ufExists && ufExists.STATUS !== 2) {
       const err = new AppError('Ja existe um UF com esta SIGLA', 404);
 
       return err;
@@ -35,14 +35,11 @@ class CriarUfService {
 
     await ufRepository.save(uf);
 
+    const ufTratado = ufRepository.trataResponse(uf);
+
     return uf;
   }
 
-  // public async buscarId(): Promise<any> {
-  //   const ufSquence = getCustomRepository(UfRepository);
-  //   const id = await ufSquence.buscarSequence();
-  //   return id;
-  // }
 }
 
 export default CriarUfService;

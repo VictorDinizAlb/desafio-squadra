@@ -1,5 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import Uf from '../entities/Uf';
+import UfTratado from '../entities/UfTratado';
 
 @EntityRepository(Uf)
 export class UfRepository extends Repository<Uf> {
@@ -40,5 +41,48 @@ export class UfRepository extends Repository<Uf> {
     const id = nextVal[0].ID;
 
     return id;
+  }
+
+  public trataResponse(resultado: Uf | Uf[]){
+
+    let linha = 0;
+    let listaUfs = [];
+
+    if(resultado instanceof Uf){
+      const { CODIGO_UF, SIGLA, NOME, STATUS } = resultado;
+
+      let ufAtual = new UfTratado();
+
+      ufAtual = {
+        codigoUF: CODIGO_UF,
+        sigla: SIGLA,
+        nome: NOME,
+        status: STATUS
+      };
+
+      return ufAtual;
+    } else {
+
+      while(linha < resultado.length){
+
+        const { CODIGO_UF, SIGLA, NOME, STATUS } = resultado[linha];
+
+        let ufAtual = new UfTratado();
+
+        ufAtual = {
+          codigoUF: CODIGO_UF,
+          sigla: SIGLA,
+          nome: NOME,
+          status: STATUS
+        };
+
+        listaUfs.push(ufAtual);
+
+        linha++;
+      }
+
+      return listaUfs;
+      // console.log('Array de objetos: \n', resultado);
+    }
   }
 }

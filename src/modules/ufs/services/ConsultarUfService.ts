@@ -1,22 +1,25 @@
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Uf from '../typeorm/entities/Uf';
+import UfTratado from '../typeorm/entities/UfTratado';
 import { UfRepository } from '../typeorm/repositories/UfsRepository';
 
 class ConsultarUfService {
-  public async procurarPorCodigo(CODIGO_UF: any): Promise<Uf> {
+  public async procurarPorCodigo(CODIGO_UF: any): Promise<UfTratado | UfTratado[]> {
     const ufsRepository = getCustomRepository(UfRepository);
 
-    const uf = await ufsRepository.findOne(CODIGO_UF);
+    const uf = await ufsRepository.procurarPorCodigo(CODIGO_UF);
 
     if (!uf) {
       throw new AppError('Nao existe UF com este codigo.');
     }
 
-    return uf;
+    const ufsTratados = ufsRepository.trataResponse(uf);
+
+    return ufsTratados;
   }
 
-  public async procurarPorSigla(SIGLA: string): Promise<Uf> {
+  public async procurarPorSigla(SIGLA: string): Promise<UfTratado | UfTratado[]> {
     const ufsRepository = getCustomRepository(UfRepository);
 
     const uf = await ufsRepository.procurarPorSigla(SIGLA);
@@ -25,7 +28,9 @@ class ConsultarUfService {
       throw new AppError('Nao existe UF com esta sigla.');
     }
 
-    return uf;
+    const ufsTratados = ufsRepository.trataResponse(uf);
+
+    return ufsTratados;
   }
 }
 

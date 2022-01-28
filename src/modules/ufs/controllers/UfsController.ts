@@ -25,10 +25,11 @@ export default class UfsController {
     } else {
       const listaUfs = new ListarUfService();
 
-      const ufs = await listaUfs.execute();
+      const uf = await listaUfs.execute();
 
-      return response.json(ufs);
+      return response.json(uf);
     }
+
   }
 
   public async gravar(request: Request, response: Response): Promise<Response> {
@@ -36,7 +37,6 @@ export default class UfsController {
     const SIGLA = sigla;
     const NOME = nome;
     const STATUS = status;
-    const CODIGO_UF = 1;
 
     const criarUf = new CriarUfService();
     const listaUf = new ListarUfService();
@@ -65,10 +65,12 @@ export default class UfsController {
     const STATUS = status;
 
     const alterarUf = new AlterarUfService();
+    const listaUfs = new ListarUfService();
 
-    const uf = await alterarUf.execute({ CODIGO_UF, NOME, SIGLA, STATUS });
+    await alterarUf.execute({ CODIGO_UF, NOME, SIGLA, STATUS });
 
-    return response.json(uf);
+    const listaUfsAtual = await listaUfs.execute();
+    return response.json(listaUfsAtual);
   }
 
   public async deletar(
