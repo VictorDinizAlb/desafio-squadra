@@ -22,7 +22,7 @@ class CriarUfService {
       const err = new AppError('Ja existe um UF com esta SIGLA', 404);
 
       return err;
-    };
+    }
 
     const CODIGO_UF = await ufRepository.buscarSequence();
 

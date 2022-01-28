@@ -53,9 +53,9 @@ export default class UfsController {
 
     const listaUfs = new ListarUfService();
 
-      const ufs = await listaUfs.execute();
+    const ufs = await listaUfs.execute();
 
-      return response.json(ufs);
+    return response.json(ufs);
   }
 
   // public async teste(): Promise<any>{
