@@ -8,7 +8,7 @@ import AppError from '@shared/errors/AppError';
 
 export default class MunicipiosController {
   public async listar(request: Request, response: Response): Promise<Response> {
-    const { codigoMunicipio, CODIGO_UF, sigla } = request.query;
+    const { codigoMunicipio, codigoUF, nome } = request.query;
 
     if (codigoMunicipio !== undefined) {
       const municipioPorCodigo = new ConsultarMunicipioService();
@@ -17,16 +17,14 @@ export default class MunicipiosController {
       );
 
       return response.json(municipio);
-    } else if (sigla !== undefined) {
-      const municipioPorSigla = new ConsultarMunicipioService();
-      const municipio = await municipioPorSigla.procurarPorNome(
-        sigla.toString(),
-      );
+    } else if (nome !== undefined) {
+      const municipioPorNome = new ConsultarMunicipioService();
+      const municipio = await municipioPorNome.procurarPorNome(nome.toString());
 
       return response.json(municipio);
-    } else if (CODIGO_UF !== undefined) {
-      const municipioPorSigla = new ConsultarMunicipioService();
-      const municipio = await municipioPorSigla.procurarPorCodigoUF(CODIGO_UF);
+    } else if (codigoUF !== undefined) {
+      const municipioPorNome = new ConsultarMunicipioService();
+      const municipio = await municipioPorNome.procurarPorCodigoUF(codigoUF);
 
       return response.json(municipio);
     } else {
@@ -43,19 +41,19 @@ export default class MunicipiosController {
     const NOME = nome;
     const STATUS = status;
 
-    const criarUf = new CriarMunicipioService();
-    const listaUf = new ListarMunicipioService();
+    const criarMunicipio = new CriarMunicipioService();
+    const listaMunicipio = new ListarMunicipioService();
 
-    const uf = await criarUf.execute({ CODIGO_UF, NOME, STATUS });
+    const municipio = await criarMunicipio.execute({ CODIGO_UF, NOME, STATUS });
 
-    if (uf instanceof AppError) {
+    if (municipio instanceof AppError) {
       return response.status(404).json({
         status: 404,
         mensagem: 'Nao foi possivel fazer conexao com o banco.',
       });
     } else {
-      const listaUfAtual = await listaUf.execute();
-      return response.status(201).json(listaUfAtual);
+      const listaMunicipioAtual = await listaMunicipio.execute();
+      return response.status(201).json(listaMunicipioAtual);
     }
   }
 

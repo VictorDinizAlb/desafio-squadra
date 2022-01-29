@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('TB_UF') //nome da tabela no banco
+@Entity('TB_BAIRRO')
 class Bairro {
   @PrimaryGeneratedColumn('increment')
   CODIGO_BAIRRO: number;
@@ -11,7 +11,7 @@ class Bairro {
   @Column('varchar', { length: 256 })
   NOME: string;
 
-  @Column({ type: 'int', width: 3 }) //"Decorators"
+  @Column({ type: 'int', width: 3 })
   STATUS: number;
 }
 

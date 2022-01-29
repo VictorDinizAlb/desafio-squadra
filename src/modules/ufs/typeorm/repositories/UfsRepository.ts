@@ -34,11 +34,11 @@ export class UfRepository extends Repository<Uf> {
     return uf;
   }
 
-  public async buscarSequence(): Promise<any> {
+  public async buscarSequence(): Promise<number> {
     const nextVal = await this.query(
       `select SEQUENCE_UF.NEXTVAL as id from dual`,
     );
-    const id = nextVal[0].ID;
+    const id = parseInt(nextVal[0].ID);
 
     return id;
   }
@@ -50,28 +50,14 @@ export class UfRepository extends Repository<Uf> {
     if (resultado instanceof Uf) {
       const { CODIGO_UF, SIGLA, NOME, STATUS } = resultado;
 
-      let ufAtual = new UfTratado();
-
-      ufAtual = {
-        codigoUF: CODIGO_UF,
-        sigla: SIGLA,
-        nome: NOME,
-        status: STATUS,
-      };
+      const ufAtual = new UfTratado(CODIGO_UF, SIGLA, NOME, STATUS);
 
       return ufAtual;
     } else {
       while (linha < resultado.length) {
         const { CODIGO_UF, SIGLA, NOME, STATUS } = resultado[linha];
 
-        let ufAtual = new UfTratado();
-
-        ufAtual = {
-          codigoUF: CODIGO_UF,
-          sigla: SIGLA,
-          nome: NOME,
-          status: STATUS,
-        };
+        const ufAtual = new UfTratado(CODIGO_UF, SIGLA, NOME, STATUS);
 
         listaUfs.push(ufAtual);
 

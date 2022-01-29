@@ -40,11 +40,11 @@ export class MunicipioRepository extends Repository<Municipio> {
     return municipios;
   }
 
-  public async buscarSequence(): Promise<any> {
+  public async buscarSequence(): Promise<number> {
     const nextVal = await this.query(
       `select SEQUENCE_MUNICIPIO.NEXTVAL as id from dual`,
     );
-    const id = nextVal[0].ID;
+    const id = parseInt(nextVal[0].ID);
 
     return id;
   }
@@ -56,28 +56,24 @@ export class MunicipioRepository extends Repository<Municipio> {
     if (resultado instanceof Municipio) {
       const { CODIGO_MUNICIPIO, CODIGO_UF, NOME, STATUS } = resultado;
 
-      let municipioAtual = new MunicipioTratado();
-
-      municipioAtual = {
-        codigoMunicipio: CODIGO_MUNICIPIO,
-        codigoUF: CODIGO_UF,
-        nome: NOME,
-        status: STATUS,
-      };
+      const municipioAtual = new MunicipioTratado(
+        CODIGO_MUNICIPIO,
+        CODIGO_UF,
+        NOME,
+        STATUS,
+      );
 
       return municipioAtual;
     } else {
       while (linha < resultado.length) {
         const { CODIGO_MUNICIPIO, CODIGO_UF, NOME, STATUS } = resultado[linha];
 
-        let municipioAtual = new MunicipioTratado();
-
-        municipioAtual = {
-          codigoMunicipio: CODIGO_MUNICIPIO,
-          codigoUF: CODIGO_UF,
-          nome: NOME,
-          status: STATUS,
-        };
+        const municipioAtual = new MunicipioTratado(
+          CODIGO_MUNICIPIO,
+          CODIGO_UF,
+          NOME,
+          STATUS,
+        );
 
         listaMunicipios.push(municipioAtual);
 

@@ -1,19 +1,11 @@
-import Uf from '@modules/ufs/typeorm/entities/Uf';
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('TB_MUNICIPIO')
 class Municipio {
   @PrimaryGeneratedColumn('increment')
   CODIGO_MUNICIPIO: number;
 
-  // @ManyToOne(type => Uf, uf => uf.CODIGO_UF)
-  @Column({ type: 'int', width: 3 })
+  @Column({ type: 'int', width: 9 })
   CODIGO_UF: number;
 
   @Column('varchar', { length: 256 })

@@ -37,8 +37,6 @@ export default class CriarMunicipioService {
 
     await municipioRepository.save(municipio);
 
-    const municipioTratado = municipioRepository.trataResponse(municipio);
-
     return municipio;
   }
 }
