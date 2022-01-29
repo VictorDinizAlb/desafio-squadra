@@ -4,7 +4,9 @@ import { MunicipioRepository } from '../typeorm/repositories/MunicipiosRepositor
 export default class DeletarMunicipioService {
   public async execute(CODIGO_MUNICIPIO: any): Promise<boolean> {
     const municipiosRepository = getCustomRepository(MunicipioRepository);
-    const municipio = await municipiosRepository.procurarPorCodigo(CODIGO_MUNICIPIO);
+    const municipio = await municipiosRepository.procurarPorCodigo(
+      CODIGO_MUNICIPIO,
+    );
 
     if (!municipio || municipio.STATUS == 2) {
       return true;

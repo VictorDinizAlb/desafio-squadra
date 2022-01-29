@@ -43,12 +43,11 @@ export class UfRepository extends Repository<Uf> {
     return id;
   }
 
-  public trataResponse(resultado: Uf | Uf[]){
-
+  public trataResponse(resultado: Uf | Uf[]) {
     let linha = 0;
-    let listaUfs = [];
+    const listaUfs = [];
 
-    if(resultado instanceof Uf){
+    if (resultado instanceof Uf) {
       const { CODIGO_UF, SIGLA, NOME, STATUS } = resultado;
 
       let ufAtual = new UfTratado();
@@ -57,14 +56,12 @@ export class UfRepository extends Repository<Uf> {
         codigoUF: CODIGO_UF,
         sigla: SIGLA,
         nome: NOME,
-        status: STATUS
+        status: STATUS,
       };
 
       return ufAtual;
     } else {
-
-      while(linha < resultado.length){
-
+      while (linha < resultado.length) {
         const { CODIGO_UF, SIGLA, NOME, STATUS } = resultado[linha];
 
         let ufAtual = new UfTratado();
@@ -73,7 +70,7 @@ export class UfRepository extends Repository<Uf> {
           codigoUF: CODIGO_UF,
           sigla: SIGLA,
           nome: NOME,
-          status: STATUS
+          status: STATUS,
         };
 
         listaUfs.push(ufAtual);

@@ -1,5 +1,4 @@
 import { getCustomRepository } from 'typeorm';
-import Uf from '../typeorm/entities/Uf';
 import UfTratado from '../typeorm/entities/UfTratado';
 import { UfRepository } from '../typeorm/repositories/UfsRepository';
 

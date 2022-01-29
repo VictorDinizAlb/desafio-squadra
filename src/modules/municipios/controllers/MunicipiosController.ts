@@ -11,34 +11,30 @@ export default class MunicipiosController {
     const { codigoMunicipio, CODIGO_UF, sigla } = request.query;
 
     if (codigoMunicipio !== undefined) {
-
       const municipioPorCodigo = new ConsultarMunicipioService();
-      const municipio = await municipioPorCodigo.procurarPorCodigo(codigoMunicipio);
+      const municipio = await municipioPorCodigo.procurarPorCodigo(
+        codigoMunicipio,
+      );
 
       return response.json(municipio);
-
     } else if (sigla !== undefined) {
-
       const municipioPorSigla = new ConsultarMunicipioService();
-      const municipio = await municipioPorSigla.procurarPorNome(sigla.toString());
+      const municipio = await municipioPorSigla.procurarPorNome(
+        sigla.toString(),
+      );
 
       return response.json(municipio);
-
     } else if (CODIGO_UF !== undefined) {
-
       const municipioPorSigla = new ConsultarMunicipioService();
       const municipio = await municipioPorSigla.procurarPorCodigoUF(CODIGO_UF);
 
       return response.json(municipio);
-
     } else {
-
       const listaMunicipios = new ListarMunicipioService();
       const municipio = await listaMunicipios.execute();
 
       return response.json(municipio);
     }
-
   }
 
   public async gravar(request: Request, response: Response): Promise<Response> {
@@ -76,7 +72,12 @@ export default class MunicipiosController {
     const alterarMunicipio = new AlterarMunicipioService();
     const listaMunicipios = new ListarMunicipioService();
 
-    await alterarMunicipio.execute({ CODIGO_MUNICIPIO, CODIGO_UF, NOME, STATUS });
+    await alterarMunicipio.execute({
+      CODIGO_MUNICIPIO,
+      CODIGO_UF,
+      NOME,
+      STATUS,
+    });
 
     const listaMunicipiosAtual = await listaMunicipios.execute();
     return response.json(listaMunicipiosAtual);

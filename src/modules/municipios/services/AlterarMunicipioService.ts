@@ -19,7 +19,9 @@ export default class AlterarMunicipioService {
   }: IRequest): Promise<Municipio> {
     const municipiosRepository = getCustomRepository(MunicipioRepository);
 
-    const municipio = await municipiosRepository.procurarPorCodigo(CODIGO_MUNICIPIO);
+    const municipio = await municipiosRepository.procurarPorCodigo(
+      CODIGO_MUNICIPIO,
+    );
 
     if (!municipio) {
       throw new AppError('municipio not found.');

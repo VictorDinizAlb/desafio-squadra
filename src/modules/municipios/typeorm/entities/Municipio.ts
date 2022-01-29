@@ -1,5 +1,11 @@
 import Uf from '@modules/ufs/typeorm/entities/Uf';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('TB_MUNICIPIO')
 class Municipio {

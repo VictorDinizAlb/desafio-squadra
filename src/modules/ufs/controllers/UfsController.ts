@@ -29,7 +29,6 @@ export default class UfsController {
 
       return response.json(uf);
     }
-
   }
 
   public async gravar(request: Request, response: Response): Promise<Response> {

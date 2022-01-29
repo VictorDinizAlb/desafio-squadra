@@ -1,6 +1,6 @@
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
-import Uf from '../typeorm/entities/Uf';
+import UfTratado from '../typeorm/entities/UfTratado';
 import { UfRepository } from '../typeorm/repositories/UfsRepository';
 
 interface IRequest {
@@ -14,7 +14,7 @@ class CriarUfService {
     SIGLA,
     NOME,
     STATUS,
-  }: IRequest): Promise<Uf | AppError> {
+  }: IRequest): Promise<UfTratado | UfTratado[] | AppError> {
     const ufRepository = getCustomRepository(UfRepository);
     const ufExists = await ufRepository.procurarPorSigla(SIGLA);
 
@@ -37,9 +37,8 @@ class CriarUfService {
 
     const ufTratado = ufRepository.trataResponse(uf);
 
-    return uf;
+    return ufTratado;
   }
-
 }
 
 export default CriarUfService;

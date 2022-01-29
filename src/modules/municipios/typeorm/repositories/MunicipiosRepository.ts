@@ -4,7 +4,9 @@ import MunicipioTratado from '../entities/MunicipioTratado';
 
 @EntityRepository(Municipio)
 export class MunicipioRepository extends Repository<Municipio> {
-  public async procurarPorCodigo(CODIGO_MUNICIPIO: number): Promise<Municipio | undefined> {
+  public async procurarPorCodigo(
+    CODIGO_MUNICIPIO: number,
+  ): Promise<Municipio | undefined> {
     const municipio = this.findOne({
       where: {
         CODIGO_MUNICIPIO,
@@ -14,7 +16,9 @@ export class MunicipioRepository extends Repository<Municipio> {
     return municipio;
   }
 
-  public async procurarPorCodigoUF(CODIGO_UF: number): Promise<Municipio | Municipio[] | undefined> {
+  public async procurarPorCodigoUF(
+    CODIGO_UF: number,
+  ): Promise<Municipio | Municipio[] | undefined> {
     const municipios = this.findOne({
       where: {
         CODIGO_UF,
@@ -24,7 +28,9 @@ export class MunicipioRepository extends Repository<Municipio> {
     return municipios;
   }
 
-  public async procurarPorNome(NOME: string): Promise<Municipio | Municipio[] | undefined> {
+  public async procurarPorNome(
+    NOME: string,
+  ): Promise<Municipio | Municipio[] | undefined> {
     const municipios = this.findOne({
       where: {
         NOME,
@@ -43,12 +49,11 @@ export class MunicipioRepository extends Repository<Municipio> {
     return id;
   }
 
-  public trataResponse(resultado: Municipio | Municipio[]){
-
+  public trataResponse(resultado: Municipio | Municipio[]) {
     let linha = 0;
-    let listaMunicipios = [];
+    const listaMunicipios = [];
 
-    if(resultado instanceof Municipio){
+    if (resultado instanceof Municipio) {
       const { CODIGO_MUNICIPIO, CODIGO_UF, NOME, STATUS } = resultado;
 
       let municipioAtual = new MunicipioTratado();
@@ -57,14 +62,12 @@ export class MunicipioRepository extends Repository<Municipio> {
         codigoMunicipio: CODIGO_MUNICIPIO,
         codigoUF: CODIGO_UF,
         nome: NOME,
-        status: STATUS
+        status: STATUS,
       };
 
       return municipioAtual;
     } else {
-
-      while(linha < resultado.length){
-
+      while (linha < resultado.length) {
         const { CODIGO_MUNICIPIO, CODIGO_UF, NOME, STATUS } = resultado[linha];
 
         let municipioAtual = new MunicipioTratado();
@@ -73,7 +76,7 @@ export class MunicipioRepository extends Repository<Municipio> {
           codigoMunicipio: CODIGO_MUNICIPIO,
           codigoUF: CODIGO_UF,
           nome: NOME,
-          status: STATUS
+          status: STATUS,
         };
 
         listaMunicipios.push(municipioAtual);

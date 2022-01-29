@@ -4,7 +4,9 @@ import UfTratado from '../typeorm/entities/UfTratado';
 import { UfRepository } from '../typeorm/repositories/UfsRepository';
 
 class ConsultarUfService {
-  public async procurarPorCodigo(CODIGO_UF: any): Promise<UfTratado | UfTratado[]> {
+  public async procurarPorCodigo(
+    CODIGO_UF: any,
+  ): Promise<UfTratado | UfTratado[]> {
     const ufsRepository = getCustomRepository(UfRepository);
 
     const uf = await ufsRepository.procurarPorCodigo(CODIGO_UF);
@@ -18,7 +20,9 @@ class ConsultarUfService {
     return ufsTratados;
   }
 
-  public async procurarPorSigla(SIGLA: string): Promise<UfTratado | UfTratado[]> {
+  public async procurarPorSigla(
+    SIGLA: string,
+  ): Promise<UfTratado | UfTratado[]> {
     const ufsRepository = getCustomRepository(UfRepository);
 
     const uf = await ufsRepository.procurarPorSigla(SIGLA);
