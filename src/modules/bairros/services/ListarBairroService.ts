@@ -6,7 +6,11 @@ class ListarBairroService {
   public async execute(): Promise<BairroTratado | BairroTratado[]> {
     const bairroRepository = getCustomRepository(BairroRepository);
 
-    const bairro = await bairroRepository.find();
+    const bairro = await bairroRepository.find({
+      order: {
+          NOME: "ASC",
+      },
+    });
     const bairroTratados = bairroRepository.trataResponse(bairro);
 
     return bairroTratados;

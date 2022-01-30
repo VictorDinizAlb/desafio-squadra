@@ -1,12 +1,14 @@
 import { Request, Response } from 'express';
+import AppError from '@shared/errors/AppError';
 import CriarPessoaService from '../services/CriarPessoaService';
 import ListarPessoaService from '../services/ListarPessoaService';
 import ConsultarPessoaService from '../services/ConsultarPessoaService';
-// import AlterarPessoaService from '../services/AlterarPessoaService';
 import DeletarPessoaService from '../services/DeletarPessoaService';
-import AppError from '@shared/errors/AppError';
 import CriarEnderecoService from '@modules/enderecos/services/CriarEnderecoService';
 import DeletarEnderecoService from '@modules/enderecos/services/DeletarEnderecoService';
+import AlterarPessoaService from '../services/AlterarPessoaService';
+import { EnderecoRepository } from '@modules/enderecos/typeorm/repositories/EnderecosRepository';
+import AlterarEnderecoService from '@modules/enderecos/services/AlterarEnderecoService';
 
 export default class PessoasController {
   public async listar(request: Request, response: Response): Promise<Response> {
@@ -14,7 +16,7 @@ export default class PessoasController {
 
     if (codigoPessoa !== undefined) {
       const pessoaPorCodigo = new ConsultarPessoaService();
-      const pessoa = await pessoaPorCodigo.procurarPorCodigo(pessoaPorCodigo);
+      const pessoa = await pessoaPorCodigo.procurarPorCodigo(codigoPessoa);
 
       return response.json(pessoa);
     } else {
@@ -56,13 +58,10 @@ export default class PessoasController {
         mensagem: 'Nao foi possivel fazer conexao com o banco.',
       });
     } else {
-      let i = 0;
-      while (i < enderecos.length) {
+      for (let i = 0; i < enderecos.length; i++) {
         const { codigoBairro, nomeRua, numero, complemento, cep } = enderecos[i];
 
-        await criarEndereco.execute({ codigoBairro, nomeRua, numero, complemento, cep }, pessoa.CODIGO_PESSOA);
-
-        i++;
+        await criarEndereco.execute(codigoBairro, nomeRua, numero, complemento, cep , pessoa.CODIGO_PESSOA);
       }
 
       const listaBairroAtual = await listaPessoa.execute();
@@ -70,29 +69,41 @@ export default class PessoasController {
     }
   }
 
-  // public async alterar(
-  //   request: Request,
-  //   response: Response,
-  // ): Promise<Response> {
-  //   const { codigoBairro, codigoMunicipio, nome, status } = request.body;
-  //   const CODIGO_BAIRRO = codigoBairro;
-  //   const CODIGO_MUNICIPIO = codigoMunicipio;
-  //   const NOME = nome;
-  //   const STATUS = status;
+  public async alterar(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { codigoPessoa, nome, sobrenome, idade, login, senha, status } = request.body;
+    const CODIGO_PESSOA = codigoPessoa;
+    const NOME = nome;
+    const SOBRENOME = sobrenome;
+    const IDADE = idade;
+    const LOGIN = login;
+    const SENHA = senha;
+    const STATUS = status;
 
-  //   const alterarBairro = new AlterarBairroService();
-  //   const listaBairros = new ListarBairroService();
+    const alterarPessoa = new AlterarPessoaService();
+    const listaPessoas = new ListarPessoaService();
 
-  //   await alterarBairro.execute({
-  //     CODIGO_BAIRRO,
-  //     CODIGO_MUNICIPIO,
-  //     NOME,
-  //     STATUS,
-  //   });
+    await alterarPessoa.execute({
+      CODIGO_PESSOA,
+      NOME,
+      SOBRENOME,
+      IDADE,
+      LOGIN,
+      SENHA,
+      STATUS,
+    });
 
-  //   const listaBairrosAtual = await listaBairros.execute();
-  //   return response.json(listaBairrosAtual);
-  // }
+    const enderecos = request.body.enderecos;
+
+    const alterarEnderecos = new AlterarEnderecoService();
+
+    alterarEnderecos.execute(enderecos, CODIGO_PESSOA);
+
+    const listaPessoasAtual = await listaPessoas.execute();
+    return response.json(listaPessoasAtual);
+  }
 
   public async deletar(
     request: Request,

@@ -1,30 +1,16 @@
-import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Endereco from '../typeorm/entities/Endereco';
 import { EnderecoRepository } from '../typeorm/repositories/EnderecosRepository';
 
-interface IRequest {
-  codigoBairro: number;
-  nomeRua: string;
-  numero: string;
-  complemento: string;
-  cep: string;
-}
-
 export default class CriarEnderecoService {
-  public async execute({
-    codigoBairro,
-    nomeRua,
-    numero,
-    complemento,
-    cep,
-  }: IRequest, CODIGO_PESSOA: number): Promise<Endereco> {
+  public async execute(
+    CODIGO_BAIRRO: number,
+    NOME_RUA: string,
+    NUMERO: string,
+    COMPLEMENTO: string,
+    CEP: string,
+    CODIGO_PESSOA: number): Promise<Endereco> {
     const enderecoRepository = getCustomRepository(EnderecoRepository);
-    const CODIGO_BAIRRO = codigoBairro;
-    const NOME_RUA = nomeRua;
-    const NUMERO = numero;
-    const COMPLEMENTO = complemento;
-    const CEP = cep;
 
     const CODIGO_ENDERECO = await enderecoRepository.buscarSequence();
 
@@ -43,7 +29,4 @@ export default class CriarEnderecoService {
     return endereco;
   }
 
-  // public async recebeDados(dadosEndereco[]: Array) {
-
-  // }
 }

@@ -6,7 +6,7 @@ const pessoasController = new PessoasController();
 
 pessoasRouter.post('/', pessoasController.gravar);
 pessoasRouter.get('/', pessoasController.listar);
-// pessoasRouter.put('/', pessoasController.alterar);
+pessoasRouter.put('/', pessoasController.alterar);
 pessoasRouter.delete('/:CODIGO_PESSOA', pessoasController.deletar);
 
 export default pessoasRouter;

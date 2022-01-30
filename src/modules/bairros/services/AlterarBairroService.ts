@@ -22,13 +22,7 @@ export default class AlterarBairroService {
     const bairro = await bairrosRepository.procurarPorCodigo(CODIGO_BAIRRO);
 
     if (!bairro) {
-      throw new AppError('bairro not found.');
-    }
-
-    const bairroExists = await bairrosRepository.procurarPorNome(NOME);
-
-    if (bairroExists && NOME !== bairro.NOME) {
-      throw new AppError('There is already one bairro with this NOME.');
+      throw new AppError('Nao existe nenhum bairro com este codigo.');
     }
 
     bairro.CODIGO_MUNICIPIO = CODIGO_MUNICIPIO;

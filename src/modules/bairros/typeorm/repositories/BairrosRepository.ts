@@ -1,3 +1,4 @@
+import MunicipioTratado from '@modules/municipios/typeorm/entities/MunicipioTratado';
 import { EntityRepository, Repository } from 'typeorm';
 import Bairro from '../entities/Bairro';
 import BairroTratado from '../entities/BairroTratado';
@@ -19,7 +20,7 @@ export class BairroRepository extends Repository<Bairro> {
   public async procurarPorCodigoMunicipio(
     CODIGO_MUNICIPIO: number,
   ): Promise<Bairro | Bairro[] | undefined> {
-    const bairros = this.findOne({
+    const bairros = this.find({
       where: {
         CODIGO_MUNICIPIO,
       },
@@ -31,7 +32,7 @@ export class BairroRepository extends Repository<Bairro> {
   public async procurarPorNome(
     NOME: string,
   ): Promise<Bairro | Bairro[] | undefined> {
-    const bairros = this.findOne({
+    const bairros = this.find({
       where: {
         NOME,
       },
@@ -49,7 +50,7 @@ export class BairroRepository extends Repository<Bairro> {
     return id;
   }
 
-  public trataResponse(resultado: Bairro | Bairro[]) {
+  public trataResponse(resultado: Bairro | Bairro[], municipio?: MunicipioTratado) {
     let linha = 0;
     const listaBairros = [];
 
@@ -61,6 +62,7 @@ export class BairroRepository extends Repository<Bairro> {
         CODIGO_MUNICIPIO,
         NOME,
         STATUS,
+        municipio
       );
 
       return municipioAtual;

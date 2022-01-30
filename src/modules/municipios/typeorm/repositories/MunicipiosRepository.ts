@@ -1,3 +1,4 @@
+import UfTratado from '@modules/ufs/typeorm/entities/UfTratado';
 import { EntityRepository, Repository } from 'typeorm';
 import Municipio from '../entities/Municipio';
 import MunicipioTratado from '../entities/MunicipioTratado';
@@ -49,7 +50,7 @@ export class MunicipioRepository extends Repository<Municipio> {
     return id;
   }
 
-  public trataResponse(resultado: Municipio | Municipio[]) {
+  public trataResponse(resultado: Municipio | Municipio[], uf?: UfTratado) {
     let linha = 0;
     const listaMunicipios = [];
 
@@ -61,6 +62,7 @@ export class MunicipioRepository extends Repository<Municipio> {
         CODIGO_UF,
         NOME,
         STATUS,
+        uf
       );
 
       return municipioAtual;
@@ -73,6 +75,7 @@ export class MunicipioRepository extends Repository<Municipio> {
           CODIGO_UF,
           NOME,
           STATUS,
+          uf
         );
 
         listaMunicipios.push(municipioAtual);

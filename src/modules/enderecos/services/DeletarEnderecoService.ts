@@ -1,4 +1,3 @@
-import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import { EnderecoRepository } from '../typeorm/repositories/EnderecosRepository';
 
@@ -12,10 +11,9 @@ export default class DeleteEnderecoService {
       },
     });
 
-    if (!enderecos) {
-      throw new AppError('endereco not found.');
+    if (enderecos) {
+      await enderecosRepository.remove(enderecos);
     }
 
-    await enderecosRepository.remove(enderecos);
   }
 }

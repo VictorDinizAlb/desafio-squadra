@@ -1,3 +1,5 @@
+import MontaEnderecoService from '@modules/enderecos/services/MontaEnderecoService';
+import PessoaTratadoPessoa from '@shared/classesTratadas/PessoaTratadoPessoa';
 import { EntityRepository, Repository } from 'typeorm';
 import Pessoa from '../entities/Pessoa';
 import PessoaTratado from '../entities/PessoaTratado';
@@ -65,5 +67,14 @@ export class PessoaRepository extends Repository<Pessoa> {
 
       return listaPessoas;
     }
+  }
+
+  public async adicionaEndereco(pessoa: PessoaTratado): Promise<PessoaTratadoPessoa>{
+    const enderecos = new MontaEnderecoService();
+    const enderecosCompletos = await enderecos.execute(pessoa.codigoPessoa);
+
+    const pessoaEndereco = new PessoaTratadoPessoa(pessoa, enderecosCompletos);
+
+    return pessoaEndereco;
   }
 }
