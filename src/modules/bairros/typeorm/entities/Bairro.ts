@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('TB_BAIRRO')
-class Bairro {
+export default class Bairro {
   @PrimaryGeneratedColumn('increment')
   CODIGO_BAIRRO: number;
 
@@ -13,6 +13,4 @@ class Bairro {
 
   @Column({ type: 'int', width: 3 })
   STATUS: number;
-}
-
-export default Bairro;
+};
