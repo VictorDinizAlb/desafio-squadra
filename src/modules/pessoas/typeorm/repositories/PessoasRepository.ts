@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import Pessoa from '../entities/Pessoa';
-// import PessoaTratado from '../entities/PessoaTratado';
+import PessoaTratado from '../entities/PessoaTratado';
 
 @EntityRepository(Pessoa)
 export class PessoaRepository extends Repository<Pessoa> {
@@ -25,39 +25,45 @@ export class PessoaRepository extends Repository<Pessoa> {
     return id;
   }
 
-  // public trataResponse(resultado: Bairro | Bairro[]) {
-  //   let linha = 0;
-  //   const listaBairros = [];
+  public trataResponse(resultado: Pessoa | Pessoa[]) {
+    let linha = 0;
+    const listaPessoas = [];
 
-  //   if (resultado instanceof Bairro) {
-  //     const { CODIGO_BAIRRO, CODIGO_MUNICIPIO, NOME, STATUS } = resultado;
+    if (resultado instanceof Pessoa) {
+      const { CODIGO_PESSOA, NOME, SOBRENOME, IDADE, LOGIN, SENHA, STATUS } = resultado;
 
-  //     const municipioAtual = new BairroTratado(
-  //       CODIGO_BAIRRO,
-  //       CODIGO_MUNICIPIO,
-  //       NOME,
-  //       STATUS,
-  //     );
+      const pessoaAtual = new PessoaTratado(
+        CODIGO_PESSOA,
+        NOME,
+        SOBRENOME,
+        IDADE,
+        LOGIN,
+        SENHA,
+        STATUS,
+      );
 
-  //     return municipioAtual;
-  //   } else {
-  //     while (linha < resultado.length) {
-  //       const { CODIGO_BAIRRO, CODIGO_MUNICIPIO, NOME, STATUS } =
-  //         resultado[linha];
+      return pessoaAtual;
+    } else {
+      while (linha < resultado.length) {
+        const { CODIGO_PESSOA, NOME, SOBRENOME, IDADE, LOGIN, SENHA, STATUS } =
+          resultado[linha];
 
-  //       const municipioAtual = new BairroTratado(
-  //         CODIGO_BAIRRO,
-  //         CODIGO_MUNICIPIO,
-  //         NOME,
-  //         STATUS,
-  //       );
+        const pessoaAtual = new PessoaTratado(
+          CODIGO_PESSOA,
+          NOME,
+          SOBRENOME,
+          IDADE,
+          LOGIN,
+          SENHA,
+          STATUS,
+        );
 
-  //       listaBairros.push(municipioAtual);
+        listaPessoas.push(pessoaAtual);
 
-  //       linha++;
-  //     }
+        linha++;
+      }
 
-  //     return listaBairros;
-  //   }
-  // }
+      return listaPessoas;
+    }
+  }
 }

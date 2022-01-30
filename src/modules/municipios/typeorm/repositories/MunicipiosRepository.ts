@@ -19,7 +19,7 @@ export class MunicipioRepository extends Repository<Municipio> {
   public async procurarPorCodigoUF(
     CODIGO_UF: number,
   ): Promise<Municipio | Municipio[] | undefined> {
-    const municipios = this.findOne({
+    const municipios = this.find({
       where: {
         CODIGO_UF,
       },

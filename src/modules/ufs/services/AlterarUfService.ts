@@ -10,7 +10,7 @@ interface IRequest {
   STATUS: number;
 }
 
-class AlterarUfService {
+export default class AlterarUfService {
   public async execute({
     CODIGO_UF,
     SIGLA,
@@ -40,5 +40,3 @@ class AlterarUfService {
     return uf;
   }
 }
-
-export default AlterarUfService;

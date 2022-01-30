@@ -81,7 +81,7 @@ export default class UfsController {
     const deletaUf = new DeletarUfService();
     const listaUfs = new ListarUfService();
 
-    const result = await deletaUf.execute(CODIGO_UF);
+    const result = await deletaUf.execute(parseInt(CODIGO_UF));
 
     if (result) {
       return response.status(404).json({

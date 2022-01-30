@@ -3,9 +3,10 @@ import CriarPessoaService from '../services/CriarPessoaService';
 import ListarPessoaService from '../services/ListarPessoaService';
 import ConsultarPessoaService from '../services/ConsultarPessoaService';
 // import AlterarPessoaService from '../services/AlterarPessoaService';
-// import DeletarPessoaService from '../services/DeletarPessoaService';
+import DeletarPessoaService from '../services/DeletarPessoaService';
 import AppError from '@shared/errors/AppError';
 import CriarEnderecoService from '@modules/enderecos/services/CriarEnderecoService';
+import DeletarEnderecoService from '@modules/enderecos/services/DeletarEnderecoService';
 
 export default class PessoasController {
   public async listar(request: Request, response: Response): Promise<Response> {
@@ -26,7 +27,6 @@ export default class PessoasController {
 
   public async gravar(request: Request, response: Response): Promise<Response> {
 
-    // console.log(request.body.enderecos[0]);
     const { nome, sobrenome, idade, login, senha, status } = request.body;
     const NOME = nome;
     const SOBRENOME = sobrenome;
@@ -65,8 +65,6 @@ export default class PessoasController {
         i++;
       }
 
-
-
       const listaBairroAtual = await listaPessoa.execute();
       return response.status(201).json(listaBairroAtual);
     }
@@ -96,25 +94,28 @@ export default class PessoasController {
   //   return response.json(listaBairrosAtual);
   // }
 
-  // public async deletar(
-  //   request: Request,
-  //   response: Response,
-  // ): Promise<Response> {
-  //   const { CODIGO_BAIRRO } = request.params;
+  public async deletar(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const { CODIGO_PESSOA } = request.params;
 
-  //   const deletaBairro = new DeletarBairroService();
-  //   const listaBairros = new ListarBairroService();
+    const deletaPessoa = new DeletarPessoaService();
+    const listaPessoas = new ListarPessoaService();
 
-  //   const result = await deletaBairro.execute(CODIGO_BAIRRO);
+    const result = await deletaPessoa.execute(parseInt(CODIGO_PESSOA));
 
-  //   if (result) {
-  //     return response.status(404).json({
-  //       status: 404,
-  //       mensagem: 'Nao foi possivel fazer conexao com o banco.',
-  //     });
-  //   } else {
-  //     const listaBairrosAtual = await listaBairros.execute();
-  //     return response.json(listaBairrosAtual);
-  //   }
-  // }
+    if (result) {
+      return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+    } else {
+      const deletaEndereco = new DeletarEnderecoService();
+      await deletaEndereco.execute(parseInt(CODIGO_PESSOA));
+
+      const listaPessoasAtual = await listaPessoas.execute();
+      return response.json(listaPessoasAtual);
+    }
+  }
 }

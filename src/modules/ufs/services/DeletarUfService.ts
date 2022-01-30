@@ -2,7 +2,7 @@ import { getCustomRepository } from 'typeorm';
 import { UfRepository } from '../typeorm/repositories/UfsRepository';
 
 class DeletarUfService {
-  public async execute(CODIGO_UF: any): Promise<boolean> {
+  public async execute(CODIGO_UF: number): Promise<boolean> {
     const ufsRepository = getCustomRepository(UfRepository);
     const uf = await ufsRepository.procurarPorCodigo(CODIGO_UF);
 
