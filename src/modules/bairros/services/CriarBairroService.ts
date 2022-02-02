@@ -16,15 +16,6 @@ export default class CriarBairroService {
     STATUS,
   }: IRequest): Promise<Bairro | AppError> {
     const bairroRepository = getCustomRepository(BairroRepository);
-    const bairroExists = await bairroRepository.procurarPorNome(NOME);
-
-    //  ============================ VERIFICAR DEPOIS =====================================
-
-    // if (bairroExists && bairroExists.STATUS !== 2 && bairroExists.NOME == NOME) {
-    //   const err = new AppError('Ja existe um bairro com esta SIGLA', 404);
-
-    //   return err;
-    // }
 
     const CODIGO_BAIRRO = await bairroRepository.buscarSequence();
 
