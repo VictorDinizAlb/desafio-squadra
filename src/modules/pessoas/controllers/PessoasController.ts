@@ -93,7 +93,7 @@ export default class PessoasController {
     const alterarPessoa = new AlterarPessoaService();
     const listaPessoas = new ListarPessoaService();
 
-    await alterarPessoa.execute({
+    const deuErrado = await alterarPessoa.execute({
       CODIGO_PESSOA,
       NOME,
       SOBRENOME,
@@ -102,6 +102,13 @@ export default class PessoasController {
       SENHA,
       STATUS,
     });
+
+    if(deuErrado){
+      return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+    }
 
     const enderecos = request.body.enderecos;
 

@@ -6,14 +6,13 @@ import { BairroRepository } from '../typeorm/repositories/BairrosRepository';
 export default class ConsultarBairroService {
   public async procurarPorCodigo(
     CODIGO_BAIRRO: any,
-  ): Promise<BairroTratado | BairroTratado[] | AppError> {
+  ): Promise<BairroTratado | BairroTratado[] | boolean> {
     const bairrosRepository = getCustomRepository(BairroRepository);
 
     const bairro = await bairrosRepository.procurarPorCodigo(CODIGO_BAIRRO);
 
     if (!bairro) {
-      const erro = new AppError('Nao existe nenhum Bairro com este codigo.');
-      return erro;
+      return false;
     }
 
     const bairrosTratados = bairrosRepository.trataResponse(bairro);
@@ -23,14 +22,13 @@ export default class ConsultarBairroService {
 
   public async procurarPorNome(
     NOME: string,
-  ): Promise<BairroTratado | BairroTratado[] | AppError> {
+  ): Promise<BairroTratado | BairroTratado[] | boolean> {
     const bairrosRepository = getCustomRepository(BairroRepository);
 
     const bairro = await bairrosRepository.procurarPorNome(NOME);
 
-    if (!bairro) {
-      const erro = new AppError('Nao existe nenhum Bairro com este codigo.');
-      return erro;
+    if (!bairro || bairro == undefined) {
+      return false;
     }
 
     const bairrosTratados = bairrosRepository.trataResponse(bairro);
@@ -40,7 +38,7 @@ export default class ConsultarBairroService {
 
   public async procurarPorCodigoMunicipio(
     CODIGO_MUNICIPIO: any,
-  ): Promise<BairroTratado | BairroTratado[] | AppError> {
+  ): Promise<BairroTratado | BairroTratado[] | boolean> {
     const municipiosRepository = getCustomRepository(BairroRepository);
 
     const municipio = await municipiosRepository.procurarPorCodigoMunicipio(
@@ -48,8 +46,7 @@ export default class ConsultarBairroService {
     );
 
     if (!municipio) {
-      const erro = new AppError('Nao existe nenhum Bairro com este codigo.');
-      return erro;
+      return false;
     }
 
     const municipiosTratados = municipiosRepository.trataResponse(municipio);

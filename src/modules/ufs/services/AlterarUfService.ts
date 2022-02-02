@@ -16,13 +16,13 @@ export default class AlterarUfService {
     SIGLA,
     NOME,
     STATUS,
-  }: IRequest): Promise<Uf> {
+  }: IRequest): Promise<Uf | boolean> {
     const ufsRepository = getCustomRepository(UfRepository);
 
     const uf = await ufsRepository.procurarPorCodigo(CODIGO_UF);
 
     if (!uf) {
-      throw new AppError('uf not found.');
+      return true;
     }
 
     const ufExists = await ufsRepository.procurarPorNome(NOME);

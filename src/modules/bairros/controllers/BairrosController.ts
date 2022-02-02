@@ -14,19 +14,40 @@ export default class BairrosController {
       const bairroPorCodigo = new ConsultarBairroService();
       const bairro = await bairroPorCodigo.procurarPorCodigo(codigoBairro);
 
-      return response.json(bairro);
+      if(!bairro){
+        return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+      } else {
+        return response.json(bairro);
+      };
     } else if (nome !== undefined) {
       const bairroPornome = new ConsultarBairroService();
       const bairro = await bairroPornome.procurarPorNome(nome.toString());
 
-      return response.json(bairro);
+      if(!bairro){
+        return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+      } else {
+        return response.json(bairro);
+      };
     } else if (codigoMunicipio !== undefined) {
       const bairroPornome = new ConsultarBairroService();
       const bairro = await bairroPornome.procurarPorCodigoMunicipio(
         codigoMunicipio,
       );
 
-      return response.json(bairro);
+      if(!bairro){
+        return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+      } else {
+        return response.json(bairro);
+      };
     } else {
       const listaBairros = new ListarBairroService();
       const bairro = await listaBairros.execute();
@@ -74,12 +95,19 @@ export default class BairrosController {
     const alterarBairro = new AlterarBairroService();
     const listaBairros = new ListarBairroService();
 
-    await alterarBairro.execute({
+    const deuErrado = await alterarBairro.execute({
       CODIGO_BAIRRO,
       CODIGO_MUNICIPIO,
       NOME,
       STATUS,
     });
+
+    if(deuErrado){
+      return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+    }
 
     const listaBairrosAtual = await listaBairros.execute();
     return response.json(listaBairrosAtual);

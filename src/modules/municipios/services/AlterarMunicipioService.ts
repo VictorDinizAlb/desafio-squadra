@@ -16,7 +16,7 @@ export default class AlterarMunicipioService {
     CODIGO_UF,
     NOME,
     STATUS,
-  }: IRequest): Promise<Municipio> {
+  }: IRequest): Promise<Municipio | boolean> {
     const municipiosRepository = getCustomRepository(MunicipioRepository);
 
     const municipio = await municipiosRepository.procurarPorCodigo(
@@ -24,13 +24,13 @@ export default class AlterarMunicipioService {
     );
 
     if (!municipio) {
-      throw new AppError('municipio not found.');
+      return true;
     }
 
     const municipioExists = await municipiosRepository.procurarPorNome(NOME);
 
     if (municipioExists && NOME !== municipio.NOME) {
-      throw new AppError('There is already one municipio with this NOME.');
+      return true;
     }
 
     municipio.CODIGO_UF = CODIGO_UF;

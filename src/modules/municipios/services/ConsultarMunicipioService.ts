@@ -6,7 +6,7 @@ import { MunicipioRepository } from '../typeorm/repositories/MunicipiosRepositor
 class ConsultarMunicipioService {
   public async procurarPorCodigo(
     CODIGO_MUNICIPIO: any,
-  ): Promise<MunicipioTratado | MunicipioTratado[]> {
+  ): Promise<MunicipioTratado | MunicipioTratado[] | boolean> {
     const municipiosRepository = getCustomRepository(MunicipioRepository);
 
     const municipio = await municipiosRepository.procurarPorCodigo(
@@ -14,7 +14,7 @@ class ConsultarMunicipioService {
     );
 
     if (!municipio) {
-      throw new AppError('Nao existe municipio com este codigo.');
+      return false;
     }
 
     const municipiosTratados = municipiosRepository.trataResponse(municipio);
@@ -24,13 +24,13 @@ class ConsultarMunicipioService {
 
   public async procurarPorNome(
     NOME: string,
-  ): Promise<MunicipioTratado | MunicipioTratado[]> {
+  ): Promise<MunicipioTratado | MunicipioTratado[] | boolean> {
     const municipiosRepository = getCustomRepository(MunicipioRepository);
 
     const municipio = await municipiosRepository.procurarPorNome(NOME);
 
     if (!municipio) {
-      throw new AppError('Nao existe municipio com esta sigla.');
+      return false;
     }
 
     const municipiosTratados = municipiosRepository.trataResponse(municipio);
@@ -40,13 +40,13 @@ class ConsultarMunicipioService {
 
   public async procurarPorCodigoUF(
     CODIGO_UF: any,
-  ): Promise<MunicipioTratado | MunicipioTratado[]> {
+  ): Promise<MunicipioTratado | MunicipioTratado[] | boolean> {
     const municipiosRepository = getCustomRepository(MunicipioRepository);
 
     const municipio = await municipiosRepository.procurarPorCodigoUF(CODIGO_UF);
 
-    if (!municipio) {
-      throw new AppError('Nao existe municipio com esta sigla.');
+    if (municipio == undefined) {
+      return false;
     }
 
     const municipiosTratados = municipiosRepository.trataResponse(municipio);

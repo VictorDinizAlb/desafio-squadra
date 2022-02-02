@@ -22,13 +22,13 @@ export default class AlterarPessoaService {
     LOGIN,
     SENHA,
     STATUS,
-  }: IRequest): Promise<Pessoa> {
+  }: IRequest): Promise<Pessoa | boolean> {
     const pessoasRepository = getCustomRepository(PessoaRepository);
 
     const pessoa = await pessoasRepository.procurarPorCodigo(CODIGO_PESSOA);
 
     if (!pessoa) {
-      throw new AppError('pessoa not found.');
+      return true;
     }
 
     pessoa.NOME = NOME;

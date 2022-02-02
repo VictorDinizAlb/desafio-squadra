@@ -15,13 +15,27 @@ export default class UfsController {
 
       const uf = await ufPorCodigo.procurarPorCodigo(codigoUF);
 
-      return response.json(uf);
+      if(!uf){
+        return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+      } else {
+        return response.json(uf);
+      };
     } else if (sigla !== undefined) {
       const ufPorSigla = new ConsultarUfService();
 
       const uf = await ufPorSigla.procurarPorSigla(sigla.toString());
+      if(!uf){
+        return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+      } else {
+        return response.json(uf);
+      };
 
-      return response.json(uf);
     } else {
       const listaUfs = new ListarUfService();
 
@@ -66,7 +80,14 @@ export default class UfsController {
     const alterarUf = new AlterarUfService();
     const listaUfs = new ListarUfService();
 
-    await alterarUf.execute({ CODIGO_UF, NOME, SIGLA, STATUS });
+    const deuErrado = await alterarUf.execute({ CODIGO_UF, NOME, SIGLA, STATUS });
+
+    if(deuErrado){
+      return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+    }
 
     const listaUfsAtual = await listaUfs.execute();
     return response.json(listaUfsAtual);

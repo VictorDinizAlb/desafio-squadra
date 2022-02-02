@@ -6,13 +6,13 @@ import { UfRepository } from '../typeorm/repositories/UfsRepository';
 class ConsultarUfService {
   public async procurarPorCodigo(
     CODIGO_UF: any,
-  ): Promise<UfTratado | UfTratado[]> {
+  ): Promise<UfTratado | UfTratado[] | boolean> {
     const ufsRepository = getCustomRepository(UfRepository);
 
     const uf = await ufsRepository.procurarPorCodigo(CODIGO_UF);
 
     if (!uf) {
-      throw new AppError('Nao existe UF com este codigo.');
+      return false;
     }
 
     const ufsTratados = ufsRepository.trataResponse(uf);
@@ -22,13 +22,13 @@ class ConsultarUfService {
 
   public async procurarPorSigla(
     SIGLA: string,
-  ): Promise<UfTratado | UfTratado[]> {
+  ): Promise<UfTratado | UfTratado[] | boolean> {
     const ufsRepository = getCustomRepository(UfRepository);
 
     const uf = await ufsRepository.procurarPorSigla(SIGLA);
 
     if (!uf) {
-      throw new AppError('Nao existe UF com esta sigla.');
+      return false;
     }
 
     const ufsTratados = ufsRepository.trataResponse(uf);

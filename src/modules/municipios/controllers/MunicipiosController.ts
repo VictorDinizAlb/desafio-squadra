@@ -12,21 +12,40 @@ export default class MunicipiosController {
 
     if (codigoMunicipio !== undefined) {
       const municipioPorCodigo = new ConsultarMunicipioService();
-      const municipio = await municipioPorCodigo.procurarPorCodigo(
-        codigoMunicipio,
-      );
+      const municipio = await municipioPorCodigo.procurarPorCodigo(codigoMunicipio);
 
-      return response.json(municipio);
+      if(!municipio){
+        return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+      } else {
+        return response.json(municipio);
+      };
     } else if (nome !== undefined) {
       const municipioPorNome = new ConsultarMunicipioService();
       const municipio = await municipioPorNome.procurarPorNome(nome.toString());
 
-      return response.json(municipio);
+      if(!municipio){
+        return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+      } else {
+        return response.json(municipio);
+      };
     } else if (codigoUF !== undefined) {
       const municipioPorNome = new ConsultarMunicipioService();
       const municipio = await municipioPorNome.procurarPorCodigoUF(codigoUF);
 
-      return response.json(municipio);
+      if(!municipio){
+        return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+      } else {
+        return response.json(municipio);
+      };
     } else {
       const listaMunicipios = new ListarMunicipioService();
       const municipio = await listaMunicipios.execute();
@@ -70,12 +89,19 @@ export default class MunicipiosController {
     const alterarMunicipio = new AlterarMunicipioService();
     const listaMunicipios = new ListarMunicipioService();
 
-    await alterarMunicipio.execute({
+    const deuErrado = await alterarMunicipio.execute({
       CODIGO_MUNICIPIO,
       CODIGO_UF,
       NOME,
       STATUS,
     });
+
+    if(deuErrado){
+      return response.status(404).json({
+        status: 404,
+        mensagem: 'Nao foi possivel fazer conexao com o banco.',
+      });
+    }
 
     const listaMunicipiosAtual = await listaMunicipios.execute();
     return response.json(listaMunicipiosAtual);

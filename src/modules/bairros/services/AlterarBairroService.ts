@@ -16,13 +16,13 @@ export default class AlterarBairroService {
     CODIGO_MUNICIPIO,
     NOME,
     STATUS,
-  }: IRequest): Promise<Bairro> {
+  }: IRequest): Promise<Bairro | boolean> {
     const bairrosRepository = getCustomRepository(BairroRepository);
 
     const bairro = await bairrosRepository.procurarPorCodigo(CODIGO_BAIRRO);
 
     if (!bairro) {
-      throw new AppError('Nao existe nenhum bairro com este codigo.');
+      return true;
     }
 
     bairro.CODIGO_MUNICIPIO = CODIGO_MUNICIPIO;
