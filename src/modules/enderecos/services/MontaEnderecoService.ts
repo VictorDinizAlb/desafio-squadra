@@ -22,8 +22,9 @@ export default class MontaEnderecoService {
         CODIGO_PESSOA,
       },
     });
+    console.log("Monta : ", enderecos);
 
-    if (!enderecos) {
+    if (enderecos.length == 0) {
       return [];
     }
 
@@ -33,11 +34,11 @@ export default class MontaEnderecoService {
 
       if (bairro !== undefined) {
 
-        const municipio = await municipioRepository.procurarPorCodigo(bairro.CODIGO_BAIRRO);
+        const municipio = await municipioRepository.procurarPorCodigo(bairro.CODIGO_MUNICIPIO);
 
         if (municipio !== undefined) {
 
-          const uf = await ufRepository.procurarPorCodigo(municipio.CODIGO_MUNICIPIO);
+          const uf = await ufRepository.procurarPorCodigo(municipio.CODIGO_UF);
 
           if (uf !== undefined) {
 

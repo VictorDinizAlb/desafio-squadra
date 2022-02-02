@@ -13,6 +13,7 @@ export default class CriarEnderecoService {
     const enderecoRepository = getCustomRepository(EnderecoRepository);
 
     const CODIGO_ENDERECO = await enderecoRepository.buscarSequence();
+    console.log("sequence: ",CODIGO_ENDERECO)
 
     const endereco = enderecoRepository.create({
       CODIGO_ENDERECO,

@@ -7,7 +7,7 @@ import { PessoaRepository } from '../typeorm/repositories/PessoasRepository';
 export default class ConsultarPessoaService {
   public async procurarPorCodigo(
     CODIGO_PESSOA: any,
-  ): Promise<PessoaTratadoPessoa | AppError> {
+  ): Promise<PessoaTratadoPessoa | AppError > {
     const pessoasRepository = getCustomRepository(PessoaRepository);
 
     const pessoa = await pessoasRepository.procurarPorCodigo(CODIGO_PESSOA);
