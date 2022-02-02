@@ -50,7 +50,10 @@ export class BairroRepository extends Repository<Bairro> {
     return id;
   }
 
-  public trataResponse(resultado: Bairro | Bairro[], municipio?: MunicipioTratado) {
+  public trataResponse(
+    resultado: Bairro | Bairro[],
+    municipio?: MunicipioTratado,
+  ) {
     let linha = 0;
     const listaBairros = [];
 
@@ -62,7 +65,7 @@ export class BairroRepository extends Repository<Bairro> {
         CODIGO_MUNICIPIO,
         NOME,
         STATUS,
-        municipio
+        municipio,
       );
 
       return municipioAtual;

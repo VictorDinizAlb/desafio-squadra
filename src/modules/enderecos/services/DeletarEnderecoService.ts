@@ -2,7 +2,7 @@ import { getCustomRepository } from 'typeorm';
 import { EnderecoRepository } from '../typeorm/repositories/EnderecosRepository';
 
 export default class DeleteEnderecoService {
-  public async execute( CODIGO_PESSOA: number): Promise<void> {
+  public async execute(CODIGO_PESSOA: number): Promise<void> {
     const enderecosRepository = getCustomRepository(EnderecoRepository);
 
     const enderecos = await enderecosRepository.find({
@@ -14,6 +14,5 @@ export default class DeleteEnderecoService {
     if (enderecos) {
       await enderecosRepository.remove(enderecos);
     }
-
   }
 }

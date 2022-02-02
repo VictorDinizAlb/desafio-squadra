@@ -8,7 +8,7 @@ class ListarMunicipioService {
 
     const municipio = await municipioRepository.find({
       order: {
-          NOME: "ASC",
+        NOME: 'ASC',
       },
     });
     const municipioTratados = municipioRepository.trataResponse(municipio);

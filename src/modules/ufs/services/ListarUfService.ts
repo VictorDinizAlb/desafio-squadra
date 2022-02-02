@@ -8,7 +8,7 @@ class ListarUfService {
 
     const ufs = await ufsRepository.find({
       order: {
-          NOME: "ASC",
+        NOME: 'ASC',
       },
     });
     const ufsTratados = ufsRepository.trataResponse(ufs);

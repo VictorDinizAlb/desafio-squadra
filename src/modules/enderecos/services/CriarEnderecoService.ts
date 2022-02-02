@@ -9,11 +9,11 @@ export default class CriarEnderecoService {
     NUMERO: string,
     COMPLEMENTO: string,
     CEP: string,
-    CODIGO_PESSOA: number): Promise<Endereco> {
+    CODIGO_PESSOA: number,
+  ): Promise<Endereco> {
     const enderecoRepository = getCustomRepository(EnderecoRepository);
 
     const CODIGO_ENDERECO = await enderecoRepository.buscarSequence();
-    console.log("sequence: ",CODIGO_ENDERECO)
 
     const endereco = enderecoRepository.create({
       CODIGO_ENDERECO,
@@ -29,5 +29,4 @@ export default class CriarEnderecoService {
 
     return endereco;
   }
-
 }

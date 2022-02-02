@@ -8,7 +8,7 @@ class ListarPessoaService {
 
     const pessoa = await pessoaRepository.find({
       order: {
-          NOME: "ASC",
+        NOME: 'ASC',
       },
     });
     const pessoaTratados = pessoaRepository.trataResponse(pessoa);

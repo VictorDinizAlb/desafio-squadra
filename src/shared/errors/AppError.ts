@@ -6,7 +6,6 @@ class AppError {
     this.mensagem = mensagem;
     this.status = status;
   }
-
 }
 
 export default AppError;

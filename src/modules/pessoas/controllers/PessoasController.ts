@@ -28,7 +28,6 @@ export default class PessoasController {
   }
 
   public async gravar(request: Request, response: Response): Promise<Response> {
-
     const { nome, sobrenome, idade, login, senha, status } = request.body;
     const NOME = nome;
     const SOBRENOME = sobrenome;
@@ -49,7 +48,7 @@ export default class PessoasController {
       IDADE,
       LOGIN,
       SENHA,
-      STATUS
+      STATUS,
     });
 
     if (pessoa instanceof AppError) {
@@ -59,9 +58,17 @@ export default class PessoasController {
       });
     } else {
       for (let i = 0; i < enderecos.length; i++) {
-        const { codigoBairro, nomeRua, numero, complemento, cep } = enderecos[i];
+        const { codigoBairro, nomeRua, numero, complemento, cep } =
+          enderecos[i];
 
-        await criarEndereco.execute(codigoBairro, nomeRua, numero, complemento, cep , pessoa.CODIGO_PESSOA);
+        await criarEndereco.execute(
+          codigoBairro,
+          nomeRua,
+          numero,
+          complemento,
+          cep,
+          pessoa.CODIGO_PESSOA,
+        );
       }
 
       const listaBairroAtual = await listaPessoa.execute();
@@ -73,7 +80,8 @@ export default class PessoasController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { codigoPessoa, nome, sobrenome, idade, login, senha, status } = request.body;
+    const { codigoPessoa, nome, sobrenome, idade, login, senha, status } =
+      request.body;
     const CODIGO_PESSOA = codigoPessoa;
     const NOME = nome;
     const SOBRENOME = sobrenome;

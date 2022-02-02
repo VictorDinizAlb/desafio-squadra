@@ -1,5 +1,5 @@
-import EnderecoTratado from "@modules/enderecos/typeorm/entities/EnderecoTratado";
-import PessoaTratado from "@modules/pessoas/typeorm/entities/PessoaTratado";
+import EnderecoTratado from '@modules/enderecos/typeorm/entities/EnderecoTratado';
+import PessoaTratado from '@modules/pessoas/typeorm/entities/PessoaTratado';
 
 export default class PessoaTratadoPessoa {
   codigoPessoa: number;
@@ -11,7 +11,10 @@ export default class PessoaTratadoPessoa {
   enderecos: EnderecoTratado | EnderecoTratado[];
   status: number;
 
-  constructor(pessoa: PessoaTratado, enderecos: EnderecoTratado | EnderecoTratado[]) {
+  constructor(
+    pessoa: PessoaTratado,
+    enderecos: EnderecoTratado | EnderecoTratado[],
+  ) {
     this.codigoPessoa = pessoa.codigoPessoa;
     this.nome = pessoa.nome;
     this.sobrenome = pessoa.sobrenome;

@@ -8,7 +8,7 @@ class ListarBairroService {
 
     const bairro = await bairroRepository.find({
       order: {
-          NOME: "ASC",
+        NOME: 'ASC',
       },
     });
     const bairroTratados = bairroRepository.trataResponse(bairro);

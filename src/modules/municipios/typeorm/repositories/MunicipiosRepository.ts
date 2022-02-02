@@ -62,7 +62,7 @@ export class MunicipioRepository extends Repository<Municipio> {
         CODIGO_UF,
         NOME,
         STATUS,
-        uf
+        uf,
       );
 
       return municipioAtual;
@@ -75,7 +75,7 @@ export class MunicipioRepository extends Repository<Municipio> {
           CODIGO_UF,
           NOME,
           STATUS,
-          uf
+          uf,
         );
 
         listaMunicipios.push(municipioAtual);

@@ -6,14 +6,18 @@ export default class AlterarPessoaService {
   public async execute(enderecosNovos: Array<any>, codigoPessoa: number) {
     const enderecoRepository = getCustomRepository(EnderecoRepository);
     const criarEndereco = new CriarEnderecoService();
-    const enderecosAtuais = await enderecoRepository.procurarPorCodigoPessoa(codigoPessoa);
+    const enderecosAtuais = await enderecoRepository.procurarPorCodigoPessoa(
+      codigoPessoa,
+    );
 
     if (enderecosAtuais.length > 0) {
-
-      for (let i = 0; i < enderecosAtuais.length; i++){
-        for (let j = 0; j < enderecosNovos.length; j++){
-          console.log("Aqui => ",enderecosAtuais[i])
-          if (enderecosAtuais[i].CODIGO_ENDERECO == enderecosNovos[j].codigoEndereco && enderecosNovos[j].codigoEndereco !== undefined) {
+      for (let i = 0; i < enderecosAtuais.length; i++) {
+        for (let j = 0; j < enderecosNovos.length; j++) {
+          if (
+            enderecosAtuais[i].CODIGO_ENDERECO ==
+              enderecosNovos[j].codigoEndereco &&
+            enderecosNovos[j].codigoEndereco !== undefined
+          ) {
             enderecosAtuais[i].CODIGO_BAIRRO = enderecosNovos[j].codigoBairro;
             enderecosAtuais[i].COMPLEMENTO = enderecosNovos[j].complemento;
             enderecosAtuais[i].NOME_RUA = enderecosNovos[j].nomeRua;
@@ -27,30 +31,41 @@ export default class AlterarPessoaService {
         }
       }
 
-      for (let i = 0; i < enderecosAtuais.length; i++){
+      for (let i = 0; i < enderecosAtuais.length; i++) {
         if (enderecosAtuais[i].CODIGO_ENDERECO !== 0) {
           await enderecoRepository.remove(enderecosAtuais[i]);
         }
-
       }
 
-      for (let i = 0; i < enderecosNovos.length; i++){
+      for (let i = 0; i < enderecosNovos.length; i++) {
         if (!enderecosNovos[i].codigoEndereco) {
-          const { codigoBairro, nomeRua, numero, complemento, cep } = enderecosNovos[i];
+          const { codigoBairro, nomeRua, numero, complemento, cep } =
+            enderecosNovos[i];
 
-          await criarEndereco.execute(codigoBairro, nomeRua, numero, complemento, cep, codigoPessoa);
+          await criarEndereco.execute(
+            codigoBairro,
+            nomeRua,
+            numero,
+            complemento,
+            cep,
+            codigoPessoa,
+          );
         }
       }
-
     } else {
-      for (let i = 0; i < enderecosNovos.length; i++){
-        const { codigoBairro, nomeRua, numero, complemento, cep } = enderecosNovos[i];
+      for (let i = 0; i < enderecosNovos.length; i++) {
+        const { codigoBairro, nomeRua, numero, complemento, cep } =
+          enderecosNovos[i];
 
-        await criarEndereco.execute(codigoBairro, nomeRua, numero, complemento, cep, codigoPessoa);
-
+        await criarEndereco.execute(
+          codigoBairro,
+          nomeRua,
+          numero,
+          complemento,
+          cep,
+          codigoPessoa,
+        );
       }
     }
-
   }
-
 }

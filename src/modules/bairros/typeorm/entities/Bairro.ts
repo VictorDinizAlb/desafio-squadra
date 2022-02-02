@@ -13,4 +13,4 @@ export default class Bairro {
 
   @Column({ type: 'int', width: 3 })
   STATUS: number;
-};
+}

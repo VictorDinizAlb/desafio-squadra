@@ -1,5 +1,5 @@
-import BairroTratado from "@modules/bairros/typeorm/entities/BairroTratado";
-import MunicipioTratadoPessoa from "./MunicipioTratadoPessoa";
+import BairroTratado from '@modules/bairros/typeorm/entities/BairroTratado';
+import MunicipioTratadoPessoa from './MunicipioTratadoPessoa';
 
 export default class BairroTratadoPessoa {
   bairro: BairroTratado | BairroTratado[];
@@ -7,7 +7,7 @@ export default class BairroTratadoPessoa {
 
   constructor(
     bairro: BairroTratado | BairroTratado[],
-    municipio: MunicipioTratadoPessoa
+    municipio: MunicipioTratadoPessoa,
   ) {
     this.bairro = bairro;
     this.municipio = municipio;

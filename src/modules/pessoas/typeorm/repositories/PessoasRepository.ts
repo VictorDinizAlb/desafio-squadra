@@ -32,7 +32,8 @@ export class PessoaRepository extends Repository<Pessoa> {
     const listaPessoas = [];
 
     if (resultado instanceof Pessoa) {
-      const { CODIGO_PESSOA, NOME, SOBRENOME, IDADE, LOGIN, SENHA, STATUS } = resultado;
+      const { CODIGO_PESSOA, NOME, SOBRENOME, IDADE, LOGIN, SENHA, STATUS } =
+        resultado;
 
       const pessoaAtual = new PessoaTratado(
         CODIGO_PESSOA,
@@ -69,7 +70,9 @@ export class PessoaRepository extends Repository<Pessoa> {
     }
   }
 
-  public async adicionaEndereco(pessoa: PessoaTratado): Promise<PessoaTratadoPessoa>{
+  public async adicionaEndereco(
+    pessoa: PessoaTratado,
+  ): Promise<PessoaTratadoPessoa> {
     const enderecos = new MontaEnderecoService();
     const enderecosCompletos = await enderecos.execute(pessoa.codigoPessoa);
 

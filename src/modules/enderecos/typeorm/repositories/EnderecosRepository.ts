@@ -5,7 +5,6 @@ import EnderecoTratado from '../entities/EnderecoTratado';
 
 @EntityRepository(Endereco)
 export class EnderecoRepository extends Repository<Endereco> {
-
   public async procurarPorCodigoPessoa(
     codigoPessoa: number,
   ): Promise<Endereco[]> {
@@ -16,8 +15,8 @@ export class EnderecoRepository extends Repository<Endereco> {
         CODIGO_PESSOA,
       },
       order: {
-        CODIGO_ENDERECO: "ASC"
-      }
+        CODIGO_ENDERECO: 'ASC',
+      },
     });
 
     return enderecos;
@@ -32,12 +31,23 @@ export class EnderecoRepository extends Repository<Endereco> {
     return id;
   }
 
-  public trataResponse(resultado: Endereco | Endereco[], bairro?: BairroTratado) {
+  public trataResponse(
+    resultado: Endereco | Endereco[],
+    bairro?: BairroTratado,
+  ) {
     let linha = 0;
     const listaEnderecos = [];
 
     if (resultado instanceof Endereco) {
-      const { CODIGO_ENDERECO, CODIGO_BAIRRO, CODIGO_PESSOA, NOME_RUA, NUMERO, COMPLEMENTO, CEP } = resultado;
+      const {
+        CODIGO_ENDERECO,
+        CODIGO_BAIRRO,
+        CODIGO_PESSOA,
+        NOME_RUA,
+        NUMERO,
+        COMPLEMENTO,
+        CEP,
+      } = resultado;
 
       const enderecoTratado = new EnderecoTratado(
         CODIGO_ENDERECO,
@@ -47,24 +57,31 @@ export class EnderecoRepository extends Repository<Endereco> {
         NUMERO,
         COMPLEMENTO,
         CEP,
-        bairro
+        bairro,
       );
 
       return enderecoTratado;
     } else {
       while (linha < resultado.length) {
-        const { CODIGO_ENDERECO, CODIGO_BAIRRO, CODIGO_PESSOA, NOME_RUA, NUMERO, COMPLEMENTO, CEP } =
-        resultado[linha];
-      const enderecoTratado = new EnderecoTratado(
-        CODIGO_ENDERECO,
-        CODIGO_BAIRRO,
-        CODIGO_PESSOA,
-        NOME_RUA,
-        NUMERO,
-        COMPLEMENTO,
-        CEP,
-        bairro
-      );
+        const {
+          CODIGO_ENDERECO,
+          CODIGO_BAIRRO,
+          CODIGO_PESSOA,
+          NOME_RUA,
+          NUMERO,
+          COMPLEMENTO,
+          CEP,
+        } = resultado[linha];
+        const enderecoTratado = new EnderecoTratado(
+          CODIGO_ENDERECO,
+          CODIGO_BAIRRO,
+          CODIGO_PESSOA,
+          NOME_RUA,
+          NUMERO,
+          COMPLEMENTO,
+          CEP,
+          bairro,
+        );
 
         listaEnderecos.push(enderecoTratado);
 

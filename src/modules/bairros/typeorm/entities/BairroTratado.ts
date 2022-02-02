@@ -1,18 +1,18 @@
-import MunicipioTratado from "@modules/municipios/typeorm/entities/MunicipioTratado";
+import MunicipioTratado from '@modules/municipios/typeorm/entities/MunicipioTratado';
 
 class BairroTratado {
   codigoBairro: number;
   codigoMunicipio: number;
   nome: string;
   status: number;
-  municipio?: MunicipioTratado
+  municipio?: MunicipioTratado;
 
   constructor(
     codigoBairro: number,
     codigoMunicipio: number,
     nome: string,
     status: number,
-    municipio?: MunicipioTratado
+    municipio?: MunicipioTratado,
   ) {
     this.codigoBairro = codigoBairro;
     this.codigoMunicipio = codigoMunicipio;

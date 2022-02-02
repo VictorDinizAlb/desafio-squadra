@@ -10,4 +10,3 @@ pessoasRouter.put('/', pessoasController.alterar);
 pessoasRouter.delete('/:CODIGO_PESSOA', pessoasController.deletar);
 
 export default pessoasRouter;
-

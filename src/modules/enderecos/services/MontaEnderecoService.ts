@@ -9,54 +9,62 @@ import EnderecoTratado from '../typeorm/entities/EnderecoTratado';
 import { EnderecoRepository } from '../typeorm/repositories/EnderecosRepository';
 
 export default class MontaEnderecoService {
-  public async execute( CODIGO_PESSOA: number): Promise<EnderecoTratado | EnderecoTratado[]> {
+  public async execute(
+    CODIGO_PESSOA: number,
+  ): Promise<EnderecoTratado | EnderecoTratado[]> {
     const enderecosRepository = getCustomRepository(EnderecoRepository);
     const bairroRepository = getCustomRepository(BairroRepository);
     const municipioRepository = getCustomRepository(MunicipioRepository);
     const ufRepository = getCustomRepository(UfRepository);
     const listaEnderecos = [];
 
-
     const enderecos = await enderecosRepository.find({
       where: {
         CODIGO_PESSOA,
       },
     });
-    console.log("Monta : ", enderecos);
 
     if (enderecos.length == 0) {
       return [];
     }
 
-    for (let i = 0; i < enderecos.length; i++){
-
-      const bairro = await bairroRepository.procurarPorCodigo(enderecos[i].CODIGO_BAIRRO);
+    for (let i = 0; i < enderecos.length; i++) {
+      const bairro = await bairroRepository.procurarPorCodigo(
+        enderecos[i].CODIGO_BAIRRO,
+      );
 
       if (bairro !== undefined) {
-
-        const municipio = await municipioRepository.procurarPorCodigo(bairro.CODIGO_MUNICIPIO);
+        const municipio = await municipioRepository.procurarPorCodigo(
+          bairro.CODIGO_MUNICIPIO,
+        );
 
         if (municipio !== undefined) {
-
           const uf = await ufRepository.procurarPorCodigo(municipio.CODIGO_UF);
 
           if (uf !== undefined) {
-
             const ufTratado = ufRepository.trataResponse(uf);
 
             if (ufTratado instanceof UfTratado) {
-              const municipioTratado = municipioRepository.trataResponse(municipio, ufTratado);
+              const municipioTratado = municipioRepository.trataResponse(
+                municipio,
+                ufTratado,
+              );
 
               if (municipioTratado instanceof MunicipioTratado) {
-                const bairroTratado = bairroRepository.trataResponse(bairro, municipioTratado);
+                const bairroTratado = bairroRepository.trataResponse(
+                  bairro,
+                  municipioTratado,
+                );
 
                 if (bairroTratado instanceof BairroTratado) {
-                  const enderecoTratadoPessoa = enderecosRepository.trataResponse(enderecos[i], bairroTratado);
+                  const enderecoTratadoPessoa =
+                    enderecosRepository.trataResponse(
+                      enderecos[i],
+                      bairroTratado,
+                    );
 
                   if (enderecoTratadoPessoa instanceof EnderecoTratado) {
-
                     listaEnderecos.push(enderecoTratadoPessoa);
-
                   }
                 }
               }

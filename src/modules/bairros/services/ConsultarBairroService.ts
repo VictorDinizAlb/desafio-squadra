@@ -12,7 +12,7 @@ export default class ConsultarBairroService {
     const bairro = await bairrosRepository.procurarPorCodigo(CODIGO_BAIRRO);
 
     if (!bairro) {
-      const erro = new AppError('Nao existe nenhum Bairro com este codigo.')
+      const erro = new AppError('Nao existe nenhum Bairro com este codigo.');
       return erro;
     }
 
@@ -29,7 +29,7 @@ export default class ConsultarBairroService {
     const bairro = await bairrosRepository.procurarPorNome(NOME);
 
     if (!bairro) {
-      const erro = new AppError('Nao existe nenhum Bairro com este codigo.')
+      const erro = new AppError('Nao existe nenhum Bairro com este codigo.');
       return erro;
     }
 
@@ -48,7 +48,7 @@ export default class ConsultarBairroService {
     );
 
     if (!municipio) {
-      const erro = new AppError('Nao existe nenhum Bairro com este codigo.')
+      const erro = new AppError('Nao existe nenhum Bairro com este codigo.');
       return erro;
     }
 

@@ -1,4 +1,4 @@
-import BairroTratado from "@modules/bairros/typeorm/entities/BairroTratado";
+import BairroTratado from '@modules/bairros/typeorm/entities/BairroTratado';
 
 export default class EnderecoTratado {
   codigoEndereco: number;
@@ -8,7 +8,7 @@ export default class EnderecoTratado {
   numero: string;
   complemento: string;
   cep: string;
-  bairro?: BairroTratado
+  bairro?: BairroTratado;
 
   constructor(
     codigoEndereco: number,
@@ -18,7 +18,7 @@ export default class EnderecoTratado {
     numero: string,
     complemento: string,
     cep: string,
-    bairro?: BairroTratado
+    bairro?: BairroTratado,
   ) {
     this.codigoEndereco = codigoEndereco;
     this.codigoBairro = codigoBairro;
