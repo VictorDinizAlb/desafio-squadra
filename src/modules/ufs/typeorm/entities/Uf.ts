@@ -8,10 +8,10 @@ class Uf {
   @Column()
   SIGLA: string;
 
-  @Column('varchar2', { length: 60 })
+  @Column('varchar', { length: 60 })
   NOME: string;
 
-  @Column({ type: 'number', width: 3 }) //"Decorators"
+  @Column({ type: 'integer', width: 3 }) //"Decorators"
   STATUS: number;
 }
 
