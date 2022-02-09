@@ -58,17 +58,14 @@ export default class BairrosController {
 
   public async gravar(request: Request, response: Response): Promise<Response> {
     const { codigoMunicipio, nome, status } = request.body;
-    const CODIGO_MUNICIPIO = codigoMunicipio;
-    const NOME = nome;
-    const STATUS = status;
 
     const criarBairro = new CriarBairroService();
     const listaBairro = new ListarBairroService();
 
     const bairro = await criarBairro.execute({
-      CODIGO_MUNICIPIO,
-      NOME,
-      STATUS,
+      codigoMunicipio,
+      nome,
+      status,
     });
 
     if (bairro instanceof AppError) {
@@ -87,22 +84,18 @@ export default class BairrosController {
     response: Response,
   ): Promise<Response> {
     const { codigoBairro, codigoMunicipio, nome, status } = request.body;
-    const CODIGO_BAIRRO = codigoBairro;
-    const CODIGO_MUNICIPIO = codigoMunicipio;
-    const NOME = nome;
-    const STATUS = status;
 
     const alterarBairro = new AlterarBairroService();
     const listaBairros = new ListarBairroService();
 
     const deuErrado = await alterarBairro.execute({
-      CODIGO_BAIRRO,
-      CODIGO_MUNICIPIO,
-      NOME,
-      STATUS,
+      codigoBairro,
+      codigoMunicipio,
+      nome,
+      status,
     });
 
-    if(deuErrado){
+    if(deuErrado == true){
       return response.status(404).json({
         status: 404,
         mensagem: 'Nao foi possivel fazer conexao com o banco.',
@@ -117,12 +110,12 @@ export default class BairrosController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { CODIGO_BAIRRO } = request.params;
+    const { codigoBairro } = request.params;
 
     const deletaBairro = new DeletarBairroService();
     const listaBairros = new ListarBairroService();
 
-    const result = await deletaBairro.execute(CODIGO_BAIRRO);
+    const result = await deletaBairro.execute(parseInt(codigoBairro));
 
     if (result) {
       return response.status(404).json({

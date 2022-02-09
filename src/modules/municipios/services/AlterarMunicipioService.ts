@@ -1,41 +1,40 @@
-import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Municipio from '../typeorm/entities/Municipio';
 import { MunicipioRepository } from '../typeorm/repositories/MunicipiosRepository';
 
 interface IRequest {
-  CODIGO_MUNICIPIO: number;
-  CODIGO_UF: number;
-  NOME: string;
-  STATUS: number;
+  codigoMunicipio: number;
+  codigoUF: number;
+  nome: string;
+  status: number;
 }
 
 export default class AlterarMunicipioService {
   public async execute({
-    CODIGO_MUNICIPIO,
-    CODIGO_UF,
-    NOME,
-    STATUS,
+    codigoMunicipio,
+    codigoUF,
+    nome,
+    status,
   }: IRequest): Promise<Municipio | boolean> {
     const municipiosRepository = getCustomRepository(MunicipioRepository);
 
     const municipio = await municipiosRepository.procurarPorCodigo(
-      CODIGO_MUNICIPIO,
+      codigoMunicipio,
     );
 
     if (!municipio) {
       return true;
     }
 
-    const municipioExists = await municipiosRepository.procurarPorNome(NOME);
+    const municipioExists = await municipiosRepository.procurarPorNome(nome);
 
-    if (municipioExists && NOME !== municipio.NOME) {
+    if (municipioExists && nome !== municipio.nome) {
       return true;
     }
 
-    municipio.CODIGO_UF = CODIGO_UF;
-    municipio.NOME = NOME;
-    municipio.STATUS = STATUS;
+    municipio.codigoUF = codigoUF;
+    municipio.nome = nome;
+    municipio.status = status;
 
     await municipiosRepository.save(municipio);
 

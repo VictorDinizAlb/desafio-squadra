@@ -4,35 +4,32 @@ import Municipio from '../typeorm/entities/Municipio';
 import { MunicipioRepository } from '../typeorm/repositories/MunicipiosRepository';
 
 interface IRequest {
-  CODIGO_UF: number;
-  NOME: string;
-  STATUS: number;
+  codigoUF: number;
+  nome: string;
+  status: number;
 }
 
 export default class CriarMunicipioService {
   public async execute({
-    CODIGO_UF,
-    NOME,
-    STATUS,
+    codigoUF,
+    nome,
+    status,
   }: IRequest): Promise<Municipio | AppError> {
     const municipioRepository = getCustomRepository(MunicipioRepository);
-    const municipioExists = await municipioRepository.procurarPorNome(NOME);
+    const municipioExists = await municipioRepository.procurarPorNome(nome);
 
     //  ============================ VERIFICAR DEPOIS =====================================
 
-    // if (municipioExists && municipioExists.STATUS !== 2 && municipioExists.NOME == NOME) {
+    // if (municipioExists && municipioExists.status !== 2 && municipioExists.nome == nome) {
     //   const err = new AppError('Ja existe um municipio com esta SIGLA', 404);
 
     //   return err;
     // }
 
-    const CODIGO_MUNICIPIO = await municipioRepository.buscarSequence();
-
     const municipio = municipioRepository.create({
-      CODIGO_MUNICIPIO,
-      CODIGO_UF,
-      NOME,
-      STATUS,
+      codigoUF,
+      nome,
+      status,
     });
 
     await municipioRepository.save(municipio);

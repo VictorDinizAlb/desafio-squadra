@@ -1,43 +1,41 @@
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
-import UfTratado from '../typeorm/entities/UfTratado';
+import Uf from '../typeorm/entities/Uf';
 import { UfRepository } from '../typeorm/repositories/UfsRepository';
 
 interface IRequest {
-  SIGLA: string;
-  NOME: string;
-  STATUS: number;
+  sigla: string;
+  nome: string;
+  status: number;
 }
 
 class CriarUfService {
   public async execute({
-    SIGLA,
-    NOME,
-    STATUS,
-  }: IRequest): Promise<UfTratado | UfTratado[] | AppError> {
+    sigla,
+    nome,
+    status,
+  }: IRequest): Promise<Uf | Uf[] | AppError> {
     const ufRepository = getCustomRepository(UfRepository);
-    const ufExists = await ufRepository.procurarPorSigla(SIGLA);
+    const ufExists = await ufRepository.procurarPorSigla(sigla);
 
-    if (ufExists && ufExists.STATUS !== 2) {
+    if (ufExists && ufExists.status !== 2) {
       const err = new AppError('Ja existe um UF com esta SIGLA', 404);
 
       return err;
     }
 
-    const CODIGO_UF = await ufRepository.buscarSequence();
+    // const codigoUF = await ufRepository.buscarSequence();
 
     const uf = ufRepository.create({
-      CODIGO_UF,
-      SIGLA,
-      NOME,
-      STATUS,
+      sigla,
+      nome,
+      status,
     });
 
     await ufRepository.save(uf);
 
-    const ufTratado = ufRepository.trataResponse(uf);
 
-    return ufTratado;
+    return uf;
   }
 }
 

@@ -7,6 +7,6 @@ const municipiosController = new MunicipiosController();
 municipiosRouter.post('/', municipiosController.gravar);
 municipiosRouter.get('/', municipiosController.listar);
 municipiosRouter.put('/', municipiosController.alterar);
-municipiosRouter.delete('/:CODIGO_MUNICIPIO', municipiosController.deletar);
+municipiosRouter.delete('/:codigoMunicipio', municipiosController.deletar);
 
 export default municipiosRouter;

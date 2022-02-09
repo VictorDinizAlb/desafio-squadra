@@ -6,11 +6,11 @@ import BairroTratado from '../entities/BairroTratado';
 @EntityRepository(Bairro)
 export class BairroRepository extends Repository<Bairro> {
   public async procurarPorCodigo(
-    CODIGO_BAIRRO: number,
+    codigoBairro: number,
   ): Promise<Bairro | undefined> {
     const bairro = this.findOne({
       where: {
-        CODIGO_BAIRRO,
+        codigoBairro,
       },
     });
 
@@ -18,11 +18,11 @@ export class BairroRepository extends Repository<Bairro> {
   }
 
   public async procurarPorCodigoMunicipio(
-    CODIGO_MUNICIPIO: number,
+    codigoMunicipio: number,
   ): Promise<Bairro | Bairro[] | undefined> {
     const bairros = this.find({
       where: {
-        CODIGO_MUNICIPIO,
+        codigoMunicipio,
       },
     });
 
@@ -30,11 +30,11 @@ export class BairroRepository extends Repository<Bairro> {
   }
 
   public async procurarPorNome(
-    NOME: string,
+    nome: string,
   ): Promise<Bairro | Bairro[] | undefined> {
     const bairros = this.find({
       where: {
-        NOME,
+        nome,
       },
     });
 
@@ -58,27 +58,27 @@ export class BairroRepository extends Repository<Bairro> {
     const listaBairros = [];
 
     if (resultado instanceof Bairro) {
-      const { CODIGO_BAIRRO, CODIGO_MUNICIPIO, NOME, STATUS } = resultado;
+      const { codigoBairro, codigoMunicipio, nome, status } = resultado;
 
       const municipioAtual = new BairroTratado(
-        CODIGO_BAIRRO,
-        CODIGO_MUNICIPIO,
-        NOME,
-        STATUS,
+        codigoBairro,
+        codigoMunicipio,
+        nome,
+        status,
         municipio,
       );
 
       return municipioAtual;
     } else {
       while (linha < resultado.length) {
-        const { CODIGO_BAIRRO, CODIGO_MUNICIPIO, NOME, STATUS } =
+        const { codigoBairro, codigoMunicipio, nome, status } =
           resultado[linha];
 
         const municipioAtual = new BairroTratado(
-          CODIGO_BAIRRO,
-          CODIGO_MUNICIPIO,
-          NOME,
-          STATUS,
+          codigoBairro,
+          codigoMunicipio,
+          nome,
+          status,
         );
 
         listaBairros.push(municipioAtual);

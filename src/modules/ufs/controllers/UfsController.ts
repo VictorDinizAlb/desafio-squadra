@@ -47,14 +47,11 @@ export default class UfsController {
 
   public async gravar(request: Request, response: Response): Promise<Response> {
     const { sigla, nome, status } = request.body;
-    const SIGLA = sigla;
-    const NOME = nome;
-    const STATUS = status;
 
     const criarUf = new CriarUfService();
     const listaUf = new ListarUfService();
 
-    const uf = await criarUf.execute({ SIGLA, NOME, STATUS });
+    const uf = await criarUf.execute({ sigla, nome, status });
 
     if (uf instanceof AppError) {
       return response.status(404).json({
@@ -72,17 +69,13 @@ export default class UfsController {
     response: Response,
   ): Promise<Response> {
     const { codigoUF, nome, sigla, status } = request.body;
-    const CODIGO_UF = codigoUF;
-    const NOME = nome;
-    const SIGLA = sigla;
-    const STATUS = status;
 
     const alterarUf = new AlterarUfService();
     const listaUfs = new ListarUfService();
 
-    const deuErrado = await alterarUf.execute({ CODIGO_UF, NOME, SIGLA, STATUS });
+    const deuErrado = await alterarUf.execute({ codigoUF, nome, sigla, status });
 
-    if(deuErrado){
+    if(deuErrado == true){
       return response.status(404).json({
         status: 404,
         mensagem: 'Nao foi possivel fazer conexao com o banco.',
@@ -97,12 +90,12 @@ export default class UfsController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { CODIGO_UF } = request.params;
+    const { codigoUF } = request.params;
 
     const deletaUf = new DeletarUfService();
     const listaUfs = new ListarUfService();
 
-    const result = await deletaUf.execute(parseInt(CODIGO_UF));
+    const result = await deletaUf.execute(parseInt(codigoUF));
 
     if (result) {
       return response.status(404).json({

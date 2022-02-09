@@ -1,57 +1,50 @@
-import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
-import MunicipioTratado from '../typeorm/entities/MunicipioTratado';
+import Municipio from '../typeorm/entities/Municipio';
 import { MunicipioRepository } from '../typeorm/repositories/MunicipiosRepository';
 
 class ConsultarMunicipioService {
   public async procurarPorCodigo(
-    CODIGO_MUNICIPIO: any,
-  ): Promise<MunicipioTratado | MunicipioTratado[] | boolean> {
+    codigoMunicipio: any,
+  ): Promise<Municipio | Municipio[] | boolean> {
     const municipiosRepository = getCustomRepository(MunicipioRepository);
 
     const municipio = await municipiosRepository.procurarPorCodigo(
-      CODIGO_MUNICIPIO,
+      codigoMunicipio,
     );
 
     if (!municipio) {
       return false;
     }
 
-    const municipiosTratados = municipiosRepository.trataResponse(municipio);
-
-    return municipiosTratados;
+    return municipio;
   }
 
   public async procurarPorNome(
-    NOME: string,
-  ): Promise<MunicipioTratado | MunicipioTratado[] | boolean> {
+    nome: string,
+  ): Promise<Municipio | Municipio[] | boolean> {
     const municipiosRepository = getCustomRepository(MunicipioRepository);
 
-    const municipio = await municipiosRepository.procurarPorNome(NOME);
+    const municipio = await municipiosRepository.procurarPorNome(nome);
 
     if (!municipio) {
       return false;
     }
 
-    const municipiosTratados = municipiosRepository.trataResponse(municipio);
-
-    return municipiosTratados;
+    return municipio;
   }
 
   public async procurarPorCodigoUF(
-    CODIGO_UF: any,
-  ): Promise<MunicipioTratado | MunicipioTratado[] | boolean> {
+    codigoUF: any,
+  ): Promise<Municipio | Municipio[] | boolean> {
     const municipiosRepository = getCustomRepository(MunicipioRepository);
 
-    const municipio = await municipiosRepository.procurarPorCodigoUF(CODIGO_UF);
+    const municipio = await municipiosRepository.procurarPorCodigoUF(codigoUF);
 
     if (municipio == undefined) {
       return false;
     }
 
-    const municipiosTratados = municipiosRepository.trataResponse(municipio);
-
-    return municipiosTratados;
+    return municipio;
   }
 }
 

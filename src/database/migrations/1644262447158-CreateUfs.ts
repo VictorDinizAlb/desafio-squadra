@@ -23,7 +23,7 @@ export class CreateUfs1644262447158 implements MigrationInterface {
             },
             {
               name: "STATUS",
-              type: "integer"
+              type: "numeric"
             }
           ]
         })

@@ -1,33 +1,32 @@
-import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Bairro from '../typeorm/entities/Bairro';
 import { BairroRepository } from '../typeorm/repositories/BairrosRepository';
 
 interface IRequest {
-  CODIGO_BAIRRO: number;
-  CODIGO_MUNICIPIO: number;
-  NOME: string;
-  STATUS: number;
+  codigoBairro: number;
+  codigoMunicipio: number;
+  nome: string;
+  status: number;
 }
 
 export default class AlterarBairroService {
   public async execute({
-    CODIGO_BAIRRO,
-    CODIGO_MUNICIPIO,
-    NOME,
-    STATUS,
+    codigoBairro,
+    codigoMunicipio,
+    nome,
+    status,
   }: IRequest): Promise<Bairro | boolean> {
     const bairrosRepository = getCustomRepository(BairroRepository);
 
-    const bairro = await bairrosRepository.procurarPorCodigo(CODIGO_BAIRRO);
+    const bairro = await bairrosRepository.procurarPorCodigo(codigoBairro);
 
     if (!bairro) {
       return true;
     }
 
-    bairro.CODIGO_MUNICIPIO = CODIGO_MUNICIPIO;
-    bairro.NOME = NOME;
-    bairro.STATUS = STATUS;
+    bairro.codigoMunicipio = codigoMunicipio;
+    bairro.nome = nome;
+    bairro.status = status;
 
     await bairrosRepository.save(bairro);
 

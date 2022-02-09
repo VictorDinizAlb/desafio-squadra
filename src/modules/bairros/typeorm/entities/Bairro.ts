@@ -1,16 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('TB_BAIRRO')
 export default class Bairro {
-  @PrimaryGeneratedColumn('increment')
-  CODIGO_BAIRRO: number;
+  @PrimaryColumn({name: "CODIGO_BAIRRO", type: "int", nullable: false})
+  codigoBairro: number;
 
-  @Column({ type: 'int', width: 9 })
-  CODIGO_MUNICIPIO: number;
+  @Column({ name: "CODIGO_MUNICIPIO", type: 'int', width: 9 })
+  codigoMunicipio: number;
 
-  @Column('varchar', { length: 256 })
-  NOME: string;
+  @Column({ name: "NOME", type: 'varchar', length: 256 })
+  nome: string;
 
-  @Column({ type: 'int', width: 3 })
-  STATUS: number;
+  @Column({ name: "STATUS", type: 'int', width: 3 })
+  status: number;
 }

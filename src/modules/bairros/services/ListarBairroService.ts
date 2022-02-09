@@ -1,19 +1,18 @@
 import { getCustomRepository } from 'typeorm';
-import BairroTratado from '../typeorm/entities/BairroTratado';
+import Bairro from '../typeorm/entities/Bairro';
 import { BairroRepository } from '../typeorm/repositories/BairrosRepository';
 
 class ListarBairroService {
-  public async execute(): Promise<BairroTratado | BairroTratado[]> {
+  public async execute(): Promise<Bairro | Bairro[]> {
     const bairroRepository = getCustomRepository(BairroRepository);
 
     const bairro = await bairroRepository.find({
       order: {
-        NOME: 'ASC',
+        nome: 'ASC',
       },
     });
-    const bairroTratados = bairroRepository.trataResponse(bairro);
 
-    return bairroTratados;
+    return bairro;
   }
 }
 

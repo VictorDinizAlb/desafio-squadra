@@ -4,26 +4,23 @@ import Bairro from '../typeorm/entities/Bairro';
 import { BairroRepository } from '../typeorm/repositories/BairrosRepository';
 
 interface IRequest {
-  CODIGO_MUNICIPIO: number;
-  NOME: string;
-  STATUS: number;
+  codigoMunicipio: number;
+  nome: string;
+  status: number;
 }
 
 export default class CriarBairroService {
   public async execute({
-    CODIGO_MUNICIPIO,
-    NOME,
-    STATUS,
+    codigoMunicipio,
+    nome,
+    status,
   }: IRequest): Promise<Bairro | AppError> {
     const bairroRepository = getCustomRepository(BairroRepository);
 
-    const CODIGO_BAIRRO = await bairroRepository.buscarSequence();
-
     const bairro = bairroRepository.create({
-      CODIGO_BAIRRO,
-      CODIGO_MUNICIPIO,
-      NOME,
-      STATUS,
+      codigoMunicipio,
+      nome,
+      status,
     });
 
     await bairroRepository.save(bairro);

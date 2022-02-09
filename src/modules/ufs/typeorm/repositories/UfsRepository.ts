@@ -4,30 +4,30 @@ import UfTratado from '../entities/UfTratado';
 
 @EntityRepository(Uf)
 export class UfRepository extends Repository<Uf> {
-  public async procurarPorCodigo(CODIGO_UF: number): Promise<Uf | undefined> {
+  public async procurarPorCodigo(codigoUF: number): Promise<Uf | undefined> {
     const uf = this.findOne({
       where: {
-        CODIGO_UF,
+        codigoUF,
       },
     });
 
     return uf;
   }
 
-  public async procurarPorSigla(SIGLA: string): Promise<Uf | undefined> {
+  public async procurarPorSigla(sigla: string): Promise<Uf | undefined> {
     const uf = this.findOne({
       where: {
-        SIGLA,
+        sigla,
       },
     });
 
     return uf;
   }
 
-  public async procurarPorNome(NOME: string): Promise<Uf | undefined> {
+  public async procurarPorNome(nome: string): Promise<Uf | undefined> {
     const uf = this.findOne({
       where: {
-        NOME,
+        nome,
       },
     });
 
@@ -48,16 +48,16 @@ export class UfRepository extends Repository<Uf> {
     const listaUfs = [];
 
     if (resultado instanceof Uf) {
-      const { CODIGO_UF, SIGLA, NOME, STATUS } = resultado;
+      const { codigoUF, sigla, nome, status } = resultado;
 
-      const ufAtual = new UfTratado(CODIGO_UF, SIGLA, NOME, STATUS);
+      const ufAtual = new UfTratado(codigoUF, sigla, nome, status);
 
       return ufAtual;
     } else {
       while (linha < resultado.length) {
-        const { CODIGO_UF, SIGLA, NOME, STATUS } = resultado[linha];
+        const { codigoUF, sigla, nome, status } = resultado[linha];
 
-        const ufAtual = new UfTratado(CODIGO_UF, SIGLA, NOME, STATUS);
+        const ufAtual = new UfTratado(codigoUF, sigla, nome, status);
 
         listaUfs.push(ufAtual);
 

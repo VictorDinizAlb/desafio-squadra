@@ -1,39 +1,34 @@
-import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
-import UfTratado from '../typeorm/entities/UfTratado';
+import Uf from '../typeorm/entities/Uf';
 import { UfRepository } from '../typeorm/repositories/UfsRepository';
 
 class ConsultarUfService {
   public async procurarPorCodigo(
-    CODIGO_UF: any,
-  ): Promise<UfTratado | UfTratado[] | boolean> {
+    codigoUF: any,
+  ): Promise<Uf | Uf[] | boolean> {
     const ufsRepository = getCustomRepository(UfRepository);
 
-    const uf = await ufsRepository.procurarPorCodigo(CODIGO_UF);
+    const uf = await ufsRepository.procurarPorCodigo(codigoUF);
 
     if (!uf) {
       return false;
     }
 
-    const ufsTratados = ufsRepository.trataResponse(uf);
-
-    return ufsTratados;
+    return uf;
   }
 
   public async procurarPorSigla(
-    SIGLA: string,
-  ): Promise<UfTratado | UfTratado[] | boolean> {
+    sigla: string,
+  ): Promise<Uf | Uf[] | boolean> {
     const ufsRepository = getCustomRepository(UfRepository);
 
-    const uf = await ufsRepository.procurarPorSigla(SIGLA);
+    const uf = await ufsRepository.procurarPorSigla(sigla);
 
     if (!uf) {
       return false;
     }
 
-    const ufsTratados = ufsRepository.trataResponse(uf);
-
-    return ufsTratados;
+    return uf;
   }
 }
 

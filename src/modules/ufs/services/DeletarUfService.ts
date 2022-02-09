@@ -2,15 +2,15 @@ import { getCustomRepository } from 'typeorm';
 import { UfRepository } from '../typeorm/repositories/UfsRepository';
 
 class DeletarUfService {
-  public async execute(CODIGO_UF: number): Promise<boolean> {
+  public async execute(codigoUF: number): Promise<boolean> {
     const ufsRepository = getCustomRepository(UfRepository);
-    const uf = await ufsRepository.procurarPorCodigo(CODIGO_UF);
+    const uf = await ufsRepository.procurarPorCodigo(codigoUF);
 
-    if (!uf || uf.STATUS == 2) {
+    if (!uf || uf.status == 2) {
       return true;
     }
 
-    uf.STATUS = 2;
+    uf.status = 2;
     await ufsRepository.save(uf);
     return false;
   }

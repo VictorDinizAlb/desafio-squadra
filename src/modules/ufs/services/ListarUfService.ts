@@ -1,19 +1,18 @@
 import { getCustomRepository } from 'typeorm';
-import UfTratado from '@modules/ufs/typeorm/entities/UfTratado';
+import Uf from '@modules/ufs/typeorm/entities/Uf';
 import { UfRepository } from '../typeorm/repositories/UfsRepository';
 
 class ListarUfService {
-  public async execute(): Promise<UfTratado | UfTratado[]> {
+  public async execute(): Promise<Uf | Uf[]> {
     const ufsRepository = getCustomRepository(UfRepository);
 
     const ufs = await ufsRepository.find({
       order: {
-        NOME: 'ASC',
+        nome: 'ASC',
       },
     });
-    const ufsTratados = ufsRepository.trataResponse(ufs);
 
-    return ufsTratados;
+    return ufs;
   }
 }
 

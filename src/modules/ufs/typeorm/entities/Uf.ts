@@ -2,17 +2,17 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('TB_UF') //nome da tabela no banco
 class Uf {
-  @PrimaryColumn('int')
-  CODIGO_UF: number;
+  @PrimaryColumn({ name: "CODIGO_UF", type: "int", nullable: false })
+  codigoUF: number;
 
-  @Column()
-  SIGLA: string;
+  @Column({ name: "SIGLA" })
+  sigla: string;
 
-  @Column('varchar', { length: 60 })
-  NOME: string;
+  @Column({name: "NOME", type: "varchar",  length: 60 })
+  nome: string;
 
-  @Column({ type: 'integer', width: 3 }) //"Decorators"
-  STATUS: number;
+  @Column({name: "STATUS", type: 'integer', width: 3 }) //"Decorators"
+  status: number;
 }
 
 export default Uf;

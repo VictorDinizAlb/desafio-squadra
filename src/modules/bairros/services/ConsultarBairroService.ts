@@ -1,56 +1,50 @@
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
-import BairroTratado from '../typeorm/entities/BairroTratado';
+import Bairro from '../typeorm/entities/Bairro';
 import { BairroRepository } from '../typeorm/repositories/BairrosRepository';
 
 export default class ConsultarBairroService {
   public async procurarPorCodigo(
-    CODIGO_BAIRRO: any,
-  ): Promise<BairroTratado | BairroTratado[] | boolean> {
+    codigoBairro: any,
+  ): Promise<Bairro | Bairro[] | boolean> {
     const bairrosRepository = getCustomRepository(BairroRepository);
 
-    const bairro = await bairrosRepository.procurarPorCodigo(CODIGO_BAIRRO);
+    const bairro = await bairrosRepository.procurarPorCodigo(codigoBairro);
 
     if (!bairro) {
       return false;
     }
 
-    const bairrosTratados = bairrosRepository.trataResponse(bairro);
-
-    return bairrosTratados;
+    return bairro;
   }
 
   public async procurarPorNome(
-    NOME: string,
-  ): Promise<BairroTratado | BairroTratado[] | boolean> {
+    nome: string,
+  ): Promise<Bairro | Bairro[] | boolean> {
     const bairrosRepository = getCustomRepository(BairroRepository);
 
-    const bairro = await bairrosRepository.procurarPorNome(NOME);
+    const bairro = await bairrosRepository.procurarPorNome(nome);
 
     if (!bairro || bairro == undefined) {
       return false;
     }
 
-    const bairrosTratados = bairrosRepository.trataResponse(bairro);
-
-    return bairrosTratados;
+    return bairro;
   }
 
   public async procurarPorCodigoMunicipio(
-    CODIGO_MUNICIPIO: any,
-  ): Promise<BairroTratado | BairroTratado[] | boolean> {
-    const municipiosRepository = getCustomRepository(BairroRepository);
+    codigoMunicipio: any,
+  ): Promise<Bairro | Bairro[] | boolean> {
+    const bairrosRepository = getCustomRepository(BairroRepository);
 
-    const municipio = await municipiosRepository.procurarPorCodigoMunicipio(
-      CODIGO_MUNICIPIO,
+    const bairros = await bairrosRepository.procurarPorCodigoMunicipio(
+      codigoMunicipio,
     );
 
-    if (!municipio) {
+    if (!bairros) {
       return false;
     }
 
-    const municipiosTratados = municipiosRepository.trataResponse(municipio);
-
-    return municipiosTratados;
+    return bairros;
   }
 }

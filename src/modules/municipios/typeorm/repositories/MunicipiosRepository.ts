@@ -6,11 +6,11 @@ import MunicipioTratado from '../entities/MunicipioTratado';
 @EntityRepository(Municipio)
 export class MunicipioRepository extends Repository<Municipio> {
   public async procurarPorCodigo(
-    CODIGO_MUNICIPIO: number,
+    codigoMunicipio: number,
   ): Promise<Municipio | undefined> {
     const municipio = this.findOne({
       where: {
-        CODIGO_MUNICIPIO,
+        codigoMunicipio,
       },
     });
 
@@ -18,11 +18,11 @@ export class MunicipioRepository extends Repository<Municipio> {
   }
 
   public async procurarPorCodigoUF(
-    CODIGO_UF: number,
+    codigoUF: number,
   ): Promise<Municipio | Municipio[] | undefined> {
     const municipios = this.find({
       where: {
-        CODIGO_UF,
+        codigoUF,
       },
     });
 
@@ -30,51 +30,51 @@ export class MunicipioRepository extends Repository<Municipio> {
   }
 
   public async procurarPorNome(
-    NOME: string,
+    nome: string,
   ): Promise<Municipio | Municipio[] | undefined> {
     const municipios = this.findOne({
       where: {
-        NOME,
+        nome,
       },
     });
 
     return municipios;
   }
 
-  public async buscarSequence(): Promise<number> {
-    const nextVal = await this.query(
-      `select SEQUENCE_MUNICIPIO.NEXTVAL as id from dual`,
-    );
-    const id = parseInt(nextVal[0].ID);
+  // public async buscarSequence(): Promise<number> {
+  //   const nextVal = await this.query(
+  //     `select SEQUENCE_MUNICIPIO.NEXTVAL as id from dual`,
+  //   );
+  //   const id = parseInt(nextVal[0].ID);
 
-    return id;
-  }
+  //   return id;
+  // }
 
   public trataResponse(resultado: Municipio | Municipio[], uf?: UfTratado) {
     let linha = 0;
     const listaMunicipios = [];
 
     if (resultado instanceof Municipio) {
-      const { CODIGO_MUNICIPIO, CODIGO_UF, NOME, STATUS } = resultado;
+      const { codigoMunicipio, codigoUF, nome, status } = resultado;
 
       const municipioAtual = new MunicipioTratado(
-        CODIGO_MUNICIPIO,
-        CODIGO_UF,
-        NOME,
-        STATUS,
+        codigoMunicipio,
+        codigoUF,
+        nome,
+        status,
         uf,
       );
 
       return municipioAtual;
     } else {
       while (linha < resultado.length) {
-        const { CODIGO_MUNICIPIO, CODIGO_UF, NOME, STATUS } = resultado[linha];
+        const { codigoMunicipio, codigoUF, nome, status } = resultado[linha];
 
         const municipioAtual = new MunicipioTratado(
-          CODIGO_MUNICIPIO,
-          CODIGO_UF,
-          NOME,
-          STATUS,
+          codigoMunicipio,
+          codigoUF,
+          nome,
+          status,
           uf,
         );
 

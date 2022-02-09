@@ -56,14 +56,11 @@ export default class MunicipiosController {
 
   public async gravar(request: Request, response: Response): Promise<Response> {
     const { codigoUF, nome, status } = request.body;
-    const CODIGO_UF = codigoUF;
-    const NOME = nome;
-    const STATUS = status;
 
     const criarMunicipio = new CriarMunicipioService();
     const listaMunicipio = new ListarMunicipioService();
 
-    const municipio = await criarMunicipio.execute({ CODIGO_UF, NOME, STATUS });
+    const municipio = await criarMunicipio.execute({ codigoUF, nome, status });
 
     if (municipio instanceof AppError) {
       return response.status(404).json({
@@ -81,22 +78,18 @@ export default class MunicipiosController {
     response: Response,
   ): Promise<Response> {
     const { codigoMunicipio, codigoUF, nome, status } = request.body;
-    const CODIGO_MUNICIPIO = codigoMunicipio;
-    const CODIGO_UF = codigoUF;
-    const NOME = nome;
-    const STATUS = status;
 
     const alterarMunicipio = new AlterarMunicipioService();
     const listaMunicipios = new ListarMunicipioService();
 
     const deuErrado = await alterarMunicipio.execute({
-      CODIGO_MUNICIPIO,
-      CODIGO_UF,
-      NOME,
-      STATUS,
+      codigoMunicipio,
+      codigoUF,
+      nome,
+      status,
     });
 
-    if(deuErrado){
+    if(deuErrado == true){
       return response.status(404).json({
         status: 404,
         mensagem: 'Nao foi possivel fazer conexao com o banco.',
@@ -111,12 +104,12 @@ export default class MunicipiosController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { CODIGO_MUNICIPIO } = request.params;
+    const { codigoMunicipio } = request.params;
 
     const deletaMunicipio = new DeletarMunicipioService();
     const listaMunicipios = new ListarMunicipioService();
 
-    const result = await deletaMunicipio.execute(CODIGO_MUNICIPIO);
+    const result = await deletaMunicipio.execute(codigoMunicipio);
 
     if (result) {
       return response.status(404).json({
