@@ -8,7 +8,7 @@ Projeto realizado durante um bootcamp para devs back-end com nodejs. O projeto s
 - Express
 - Postgres / OracleDB
 
-## As funcionalidades são realizar o CRUD dos registros de UFs, Municipios, Bairros, Endereços e Pessoas.
+### As funcionalidades são realizar o CRUD dos registros de UFs, Municipios, Bairros, Endereços e Pessoas.
 
 #### As rotas para criar são:
 
