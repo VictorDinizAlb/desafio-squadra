@@ -1,19 +1,18 @@
 import { getCustomRepository } from 'typeorm';
-import PessoaTratado from '../typeorm/entities/PessoaTratado';
+import Pessoa from '../typeorm/entities/Pessoa';
 import { PessoaRepository } from '../typeorm/repositories/PessoasRepository';
 
 class ListarPessoaService {
-  public async execute(): Promise<PessoaTratado | PessoaTratado[]> {
+  public async execute(): Promise<Pessoa | Pessoa[]> {
     const pessoaRepository = getCustomRepository(PessoaRepository);
 
     const pessoa = await pessoaRepository.find({
       order: {
-        NOME: 'ASC',
+        nome: 'ASC',
       },
     });
-    const pessoaTratados = pessoaRepository.trataResponse(pessoa);
 
-    return pessoaTratados;
+    return pessoa;
   }
 }
 

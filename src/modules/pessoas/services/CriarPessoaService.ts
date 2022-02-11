@@ -5,35 +5,32 @@ import { PessoaRepository } from '../typeorm/repositories/PessoasRepository';
 import { EnderecoRepository } from 'src/modules/enderecos/typeorm/repositories/EnderecosRepository';
 
 interface IRequest {
-  NOME: string;
-  SOBRENOME: string;
-  IDADE: number;
-  LOGIN: string;
-  SENHA: string;
-  STATUS: number;
+  nome: string;
+  sobrenome: string;
+  idade: number;
+  login: string;
+  senha: string;
+  status: number;
 }
 
 export default class CriarPessoaService {
   public async execute({
-    NOME,
-    SOBRENOME,
-    IDADE,
-    LOGIN,
-    SENHA,
-    STATUS,
+    nome,
+    sobrenome,
+    idade,
+    login,
+    senha,
+    status,
   }: IRequest): Promise<Pessoa | AppError> {
     const pessoaRepository = getCustomRepository(PessoaRepository);
 
-    const CODIGO_PESSOA = await pessoaRepository.buscarSequence();
-
     const pessoa = pessoaRepository.create({
-      CODIGO_PESSOA,
-      NOME,
-      SOBRENOME,
-      IDADE,
-      LOGIN,
-      SENHA,
-      STATUS,
+      nome,
+      sobrenome,
+      idade,
+      login,
+      senha,
+      status,
     });
 
     await pessoaRepository.save(pessoa);

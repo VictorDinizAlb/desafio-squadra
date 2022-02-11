@@ -4,39 +4,39 @@ import Pessoa from '../typeorm/entities/Pessoa';
 import { PessoaRepository } from '../typeorm/repositories/PessoasRepository';
 
 interface IRequest {
-  CODIGO_PESSOA: number;
-  NOME: string;
-  SOBRENOME: string;
-  IDADE: number;
-  LOGIN: string;
-  SENHA: string;
-  STATUS: number;
+  codigoPessoa: number;
+  nome: string;
+  sobrenome: string;
+  idade: number;
+  login: string;
+  senha: string;
+  status: number;
 }
 
 export default class AlterarPessoaService {
   public async execute({
-    CODIGO_PESSOA,
-    NOME,
-    SOBRENOME,
-    IDADE,
-    LOGIN,
-    SENHA,
-    STATUS,
+    codigoPessoa,
+    nome,
+    sobrenome,
+    idade,
+    login,
+    senha,
+    status,
   }: IRequest): Promise<Pessoa | boolean> {
     const pessoasRepository = getCustomRepository(PessoaRepository);
 
-    const pessoa = await pessoasRepository.procurarPorCodigo(CODIGO_PESSOA);
+    const pessoa = await pessoasRepository.procurarPorCodigo(codigoPessoa);
 
     if (!pessoa) {
       return true;
     }
 
-    pessoa.NOME = NOME;
-    pessoa.SOBRENOME = SOBRENOME;
-    pessoa.IDADE = IDADE;
-    pessoa.LOGIN = LOGIN;
-    pessoa.SENHA = SENHA;
-    pessoa.STATUS = STATUS;
+    pessoa.nome = nome;
+    pessoa.sobrenome = sobrenome;
+    pessoa.idade = idade;
+    pessoa.login = login;
+    pessoa.senha = senha;
+    pessoa.status = status;
 
     await pessoasRepository.save(pessoa);
 

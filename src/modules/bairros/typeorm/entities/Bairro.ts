@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import Municipio from '@modules/municipios/typeorm/entities/Municipio';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity('TB_BAIRRO')
 export default class Bairro {
@@ -7,6 +8,10 @@ export default class Bairro {
 
   @Column({ name: "CODIGO_MUNICIPIO", type: 'int', width: 9 })
   codigoMunicipio: number;
+
+  // @ManyToOne(() => Municipio)
+  // @JoinColumn({name: "CODIGO_MUNICIPIO"})
+  // codigoMunicipio: Municipio;
 
   @Column({ name: "NOME", type: 'varchar', length: 256 })
   nome: string;

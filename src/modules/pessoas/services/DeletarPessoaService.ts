@@ -2,15 +2,15 @@ import { getCustomRepository } from 'typeorm';
 import { PessoaRepository } from '../typeorm/repositories/PessoasRepository';
 
 class DeletarPessoaService {
-  public async execute(CODIGO_PESSOA: number): Promise<boolean> {
+  public async execute(codigoPessoa: number): Promise<boolean> {
     const pessoasRepository = getCustomRepository(PessoaRepository);
-    const pessoa = await pessoasRepository.procurarPorCodigo(CODIGO_PESSOA);
+    const pessoa = await pessoasRepository.procurarPorCodigo(codigoPessoa);
 
-    if (!pessoa || pessoa.STATUS == 2) {
+    if (!pessoa || pessoa.status == 2) {
       return true;
     }
 
-    pessoa.STATUS = 2;
+    pessoa.status = 2;
     await pessoasRepository.save(pessoa);
     return false;
   }

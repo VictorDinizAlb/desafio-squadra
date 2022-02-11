@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import Uf from '@modules/ufs/typeorm/entities/Uf';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity('TB_MUNICIPIO')
 class Municipio {
@@ -7,6 +8,10 @@ class Municipio {
 
   @Column({ name: "CODIGO_UF", type: 'int', width: 9 })
   codigoUF: number;
+
+  // @ManyToOne(() => Uf)
+  // @JoinColumn({name: "CODIGO_UF"})
+  // codigoUF: Uf;
 
   @Column({ name: "NOME", type: "varchar", length: 256 })
   nome: string;

@@ -7,11 +7,11 @@ import PessoaTratado from '../entities/PessoaTratado';
 @EntityRepository(Pessoa)
 export class PessoaRepository extends Repository<Pessoa> {
   public async procurarPorCodigo(
-    CODIGO_PESSOA: number,
+    codigoPessoa: number,
   ): Promise<Pessoa | undefined> {
     const pessoa = this.findOne({
       where: {
-        CODIGO_PESSOA,
+        codigoPessoa,
       },
     });
 
@@ -27,48 +27,48 @@ export class PessoaRepository extends Repository<Pessoa> {
     return id;
   }
 
-  public trataResponse(resultado: Pessoa | Pessoa[]) {
-    let linha = 0;
-    const listaPessoas = [];
+  // public trataResponse(resultado: Pessoa | Pessoa[]) {
+  //   let linha = 0;
+  //   const listaPessoas = [];
 
-    if (resultado instanceof Pessoa) {
-      const { CODIGO_PESSOA, NOME, SOBRENOME, IDADE, LOGIN, SENHA, STATUS } =
-        resultado;
+  //   if (resultado instanceof Pessoa) {
+  //     const { CODIGO_PESSOA, NOME, SOBRENOME, IDADE, LOGIN, SENHA, STATUS } =
+  //       resultado;
 
-      const pessoaAtual = new PessoaTratado(
-        CODIGO_PESSOA,
-        NOME,
-        SOBRENOME,
-        IDADE,
-        LOGIN,
-        SENHA,
-        STATUS,
-      );
+  //     const pessoaAtual = new PessoaTratado(
+  //       CODIGO_PESSOA,
+  //       NOME,
+  //       SOBRENOME,
+  //       IDADE,
+  //       LOGIN,
+  //       SENHA,
+  //       STATUS,
+  //     );
 
-      return pessoaAtual;
-    } else {
-      while (linha < resultado.length) {
-        const { CODIGO_PESSOA, NOME, SOBRENOME, IDADE, LOGIN, SENHA, STATUS } =
-          resultado[linha];
+  //     return pessoaAtual;
+  //   } else {
+  //     while (linha < resultado.length) {
+  //       const { CODIGO_PESSOA, NOME, SOBRENOME, IDADE, LOGIN, SENHA, STATUS } =
+  //         resultado[linha];
 
-        const pessoaAtual = new PessoaTratado(
-          CODIGO_PESSOA,
-          NOME,
-          SOBRENOME,
-          IDADE,
-          LOGIN,
-          SENHA,
-          STATUS,
-        );
+  //       const pessoaAtual = new PessoaTratado(
+  //         CODIGO_PESSOA,
+  //         NOME,
+  //         SOBRENOME,
+  //         IDADE,
+  //         LOGIN,
+  //         SENHA,
+  //         STATUS,
+  //       );
 
-        listaPessoas.push(pessoaAtual);
+  //       listaPessoas.push(pessoaAtual);
 
-        linha++;
-      }
+  //       linha++;
+  //     }
 
-      return listaPessoas;
-    }
-  }
+  //     return listaPessoas;
+  //   }
+  // }
 
   public async adicionaEndereco(
     pessoa: PessoaTratado,

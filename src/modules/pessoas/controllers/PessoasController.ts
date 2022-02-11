@@ -29,12 +29,6 @@ export default class PessoasController {
 
   public async gravar(request: Request, response: Response): Promise<Response> {
     const { nome, sobrenome, idade, login, senha, status } = request.body;
-    const NOME = nome;
-    const SOBRENOME = sobrenome;
-    const IDADE = idade;
-    const LOGIN = login;
-    const SENHA = senha;
-    const STATUS = status;
 
     const enderecos = request.body.enderecos;
 
@@ -43,12 +37,12 @@ export default class PessoasController {
     const criarEndereco = new CriarEnderecoService();
 
     const pessoa = await criarPessoa.execute({
-      NOME,
-      SOBRENOME,
-      IDADE,
-      LOGIN,
-      SENHA,
-      STATUS,
+      nome,
+      sobrenome,
+      idade,
+      login,
+      senha,
+      status,
     });
 
     if (pessoa instanceof AppError) {
@@ -67,7 +61,7 @@ export default class PessoasController {
           numero,
           complemento,
           cep,
-          pessoa.CODIGO_PESSOA,
+          pessoa.codigoPessoa,
         );
       }
 
@@ -80,27 +74,19 @@ export default class PessoasController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { codigoPessoa, nome, sobrenome, idade, login, senha, status } =
-      request.body;
-    const CODIGO_PESSOA = codigoPessoa;
-    const NOME = nome;
-    const SOBRENOME = sobrenome;
-    const IDADE = idade;
-    const LOGIN = login;
-    const SENHA = senha;
-    const STATUS = status;
+    const { codigoPessoa, nome, sobrenome, idade, login, senha, status } = request.body;
 
     const alterarPessoa = new AlterarPessoaService();
     const listaPessoas = new ListarPessoaService();
 
     const deuErrado = await alterarPessoa.execute({
-      CODIGO_PESSOA,
-      NOME,
-      SOBRENOME,
-      IDADE,
-      LOGIN,
-      SENHA,
-      STATUS,
+      codigoPessoa,
+      nome,
+      sobrenome,
+      idade,
+      login,
+      senha,
+      status,
     });
 
     if(deuErrado){
@@ -114,7 +100,7 @@ export default class PessoasController {
 
     const alterarEnderecos = new AlterarEnderecoService();
 
-    alterarEnderecos.execute(enderecos, CODIGO_PESSOA);
+    alterarEnderecos.execute(enderecos, codigoPessoa);
 
     const listaPessoasAtual = await listaPessoas.execute();
     return response.json(listaPessoasAtual);
@@ -124,12 +110,12 @@ export default class PessoasController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const { CODIGO_PESSOA } = request.params;
+    const { codigoPessoa } = request.params;
 
     const deletaPessoa = new DeletarPessoaService();
     const listaPessoas = new ListarPessoaService();
 
-    const result = await deletaPessoa.execute(parseInt(CODIGO_PESSOA));
+    const result = await deletaPessoa.execute(parseInt(codigoPessoa));
 
     if (result) {
       return response.status(404).json({
@@ -138,7 +124,7 @@ export default class PessoasController {
       });
     } else {
       const deletaEndereco = new DeletarEnderecoService();
-      await deletaEndereco.execute(parseInt(CODIGO_PESSOA));
+      await deletaEndereco.execute(parseInt(codigoPessoa));
 
       const listaPessoasAtual = await listaPessoas.execute();
       return response.json(listaPessoasAtual);

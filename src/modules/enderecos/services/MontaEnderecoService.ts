@@ -10,7 +10,7 @@ import { EnderecoRepository } from '../typeorm/repositories/EnderecosRepository'
 
 export default class MontaEnderecoService {
   public async execute(
-    CODIGO_PESSOA: number,
+    codigoPessoa: number,
   ): Promise<EnderecoTratado | EnderecoTratado[]> {
     const enderecosRepository = getCustomRepository(EnderecoRepository);
     const bairroRepository = getCustomRepository(BairroRepository);
@@ -20,7 +20,7 @@ export default class MontaEnderecoService {
 
     const enderecos = await enderecosRepository.find({
       where: {
-        CODIGO_PESSOA,
+        codigoPessoa,
       },
     });
 
@@ -30,16 +30,16 @@ export default class MontaEnderecoService {
 
     for (let i = 0; i < enderecos.length; i++) {
       const bairro = await bairroRepository.procurarPorCodigo(
-        enderecos[i].CODIGO_BAIRRO,
+        enderecos[i].codigoBairro,
       );
 
       if (bairro !== undefined) {
         const municipio = await municipioRepository.procurarPorCodigo(
-          bairro.CODIGO_MUNICIPIO,
+          bairro.codigoMunicipio,
         );
 
         if (municipio !== undefined) {
-          const uf = await ufRepository.procurarPorCodigo(municipio.CODIGO_UF);
+          const uf = await ufRepository.procurarPorCodigo(municipio.codigoUF);
 
           if (uf !== undefined) {
             const ufTratado = ufRepository.trataResponse(uf);

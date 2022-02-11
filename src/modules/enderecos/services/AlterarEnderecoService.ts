@@ -14,25 +14,25 @@ export default class AlterarPessoaService {
       for (let i = 0; i < enderecosAtuais.length; i++) {
         for (let j = 0; j < enderecosNovos.length; j++) {
           if (
-            enderecosAtuais[i].CODIGO_ENDERECO ==
+            enderecosAtuais[i].codigoEndereco ==
               enderecosNovos[j].codigoEndereco &&
             enderecosNovos[j].codigoEndereco !== undefined
           ) {
-            enderecosAtuais[i].CODIGO_BAIRRO = enderecosNovos[j].codigoBairro;
-            enderecosAtuais[i].COMPLEMENTO = enderecosNovos[j].complemento;
-            enderecosAtuais[i].NOME_RUA = enderecosNovos[j].nomeRua;
-            enderecosAtuais[i].NUMERO = enderecosNovos[j].numero;
-            enderecosAtuais[i].CEP = enderecosNovos[j].cep;
+            enderecosAtuais[i].codigoBairro = enderecosNovos[j].codigoBairro;
+            enderecosAtuais[i].complemento = enderecosNovos[j].complemento;
+            enderecosAtuais[i].nomeRua = enderecosNovos[j].nomeRua;
+            enderecosAtuais[i].numero = enderecosNovos[j].numero;
+            enderecosAtuais[i].cep = enderecosNovos[j].cep;
 
             await enderecoRepository.save(enderecosAtuais[i]);
 
-            enderecosAtuais[i].CODIGO_ENDERECO = 0;
+            enderecosAtuais[i].codigoEndereco = 0;
           }
         }
       }
 
       for (let i = 0; i < enderecosAtuais.length; i++) {
-        if (enderecosAtuais[i].CODIGO_ENDERECO !== 0) {
+        if (enderecosAtuais[i].codigoEndereco !== 0) {
           await enderecoRepository.remove(enderecosAtuais[i]);
         }
       }

@@ -1,25 +1,25 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('TB_PESSOA')
 export default class Pessoa {
-  @PrimaryGeneratedColumn('increment')
-  CODIGO_PESSOA: number;
+  @PrimaryColumn({ name: "CODIGO_PESSOA", type: "int", nullable: false })
+  codigoPessoa: number;
 
-  @Column('varchar', { length: 256 })
-  NOME: string;
+  @Column({ name: "NOME", type: 'varchar', length: 256 })
+  nome: string;
 
-  @Column('varchar', { length: 256 })
-  SOBRENOME: string;
+  @Column({ name: "SOBRENOME", type: 'varchar', length: 256 })
+  sobrenome: string;
 
-  @Column({ type: 'int', width: 3 })
-  IDADE: number;
+  @Column({ name: "IDADE", type: 'int', width: 3 })
+  idade: number;
 
-  @Column('varchar', { length: 50 })
-  LOGIN: string;
+  @Column({ name: "LOGIN", type: 'varchar', length: 50 })
+  login: string;
 
-  @Column('varchar', { length: 50 })
-  SENHA: string;
+  @Column({ name: "SENHA", type: 'varchar', length: 50 })
+  senha: string;
 
-  @Column({ type: 'int', width: 3 })
-  STATUS: number;
+  @Column({ name: "STATUS", type: 'int', width: 3 })
+  status: number;
 }

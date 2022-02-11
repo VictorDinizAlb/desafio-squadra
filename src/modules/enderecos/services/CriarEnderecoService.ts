@@ -4,25 +4,23 @@ import { EnderecoRepository } from '../typeorm/repositories/EnderecosRepository'
 
 export default class CriarEnderecoService {
   public async execute(
-    CODIGO_BAIRRO: number,
-    NOME_RUA: string,
-    NUMERO: string,
-    COMPLEMENTO: string,
-    CEP: string,
-    CODIGO_PESSOA: number,
+    codigoBairro: number,
+    nomeRua: string,
+    numero: string,
+    complemento: string,
+    cep: string,
+    codigoPessoa: number,
   ): Promise<Endereco> {
     const enderecoRepository = getCustomRepository(EnderecoRepository);
 
-    const CODIGO_ENDERECO = await enderecoRepository.buscarSequence();
 
     const endereco = enderecoRepository.create({
-      CODIGO_ENDERECO,
-      CODIGO_PESSOA,
-      CODIGO_BAIRRO,
-      NOME_RUA,
-      NUMERO,
-      COMPLEMENTO,
-      CEP,
+      codigoPessoa,
+      codigoBairro,
+      nomeRua,
+      numero,
+      complemento,
+      cep,
     });
 
     await enderecoRepository.save(endereco);

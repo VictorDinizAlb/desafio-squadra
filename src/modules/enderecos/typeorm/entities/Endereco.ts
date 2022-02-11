@@ -1,27 +1,27 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('TB_ENDERECO')
 class Endereco {
-  @PrimaryGeneratedColumn('increment')
-  CODIGO_ENDERECO: number;
+  @PrimaryColumn({ name: "CODIGO_ENDERECO", type: "int", nullable: false })
+  codigoEndereco: number;
 
-  @Column({ type: 'int', width: 9 })
-  CODIGO_PESSOA: number;
+  @Column({ name: "CODIGO_PESSOA", type: 'int', width: 9 })
+  codigoPessoa: number;
 
-  @Column({ type: 'int', width: 9 })
-  CODIGO_BAIRRO: number;
+  @Column({ name: "CODIGO_BAIRRO", type: 'int', width: 9 })
+  codigoBairro: number;
 
-  @Column('varchar', { length: 256 })
-  NOME_RUA: string;
+  @Column({ name: "NOME_RUA", type: 'varchar', length: 256 })
+  nomeRua: string;
 
-  @Column('varchar', { length: 10 })
-  NUMERO: string;
+  @Column({ name: "NUMERO", type: 'varchar', length: 10 })
+  numero: string;
 
-  @Column('varchar', { length: 20 })
-  COMPLEMENTO: string;
+  @Column({ name: "COMPLEMENTO", type: 'varchar', length: 20 })
+  complemento: string;
 
-  @Column('varchar', { length: 10 })
-  CEP: string;
+  @Column({ name: "CEP", type: 'varchar', length: 10 })
+  cep: string;
 }
 
 export default Endereco;
