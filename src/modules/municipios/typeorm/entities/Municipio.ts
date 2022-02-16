@@ -9,15 +9,15 @@ class Municipio {
   @Column({ name: "CODIGO_UF", type: 'int', width: 9 })
   codigoUF: number;
 
-  // @ManyToOne(() => Uf)
-  // @JoinColumn({name: "CODIGO_UF"})
-  // codigoUF: Uf;
-
   @Column({ name: "NOME", type: "varchar", length: 256 })
   nome: string;
 
   @Column({  name: "STATUS", type: 'int', width: 3 })
   status: number;
+
+  @ManyToOne(() => Uf)
+  @JoinColumn({name: "CODIGO_UF"})
+  uf: Uf;
 }
 
 export default Municipio;

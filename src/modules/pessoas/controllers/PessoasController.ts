@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 import AppError from '@shared/errors/AppError';
+
 import CriarPessoaService from '../services/CriarPessoaService';
 import ListarPessoaService from '../services/ListarPessoaService';
 import ConsultarPessoaService from '../services/ConsultarPessoaService';
 import DeletarPessoaService from '../services/DeletarPessoaService';
+import AlterarPessoaService from '../services/AlterarPessoaService';
+
 import CriarEnderecoService from '@modules/enderecos/services/CriarEnderecoService';
 import DeletarEnderecoService from '@modules/enderecos/services/DeletarEnderecoService';
-import AlterarPessoaService from '../services/AlterarPessoaService';
-import { EnderecoRepository } from '@modules/enderecos/typeorm/repositories/EnderecosRepository';
 import AlterarEnderecoService from '@modules/enderecos/services/AlterarEnderecoService';
 
 export default class PessoasController {
@@ -60,8 +61,7 @@ export default class PessoasController {
           nomeRua,
           numero,
           complemento,
-          cep,
-          pessoa.codigoPessoa,
+          cep
         );
       }
 
@@ -89,7 +89,8 @@ export default class PessoasController {
       status,
     });
 
-    if(deuErrado){
+    if(deuErrado == true){
+      console.log("Deu errado")
       return response.status(404).json({
         status: 404,
         mensagem: 'Nao foi possivel fazer conexao com o banco.',

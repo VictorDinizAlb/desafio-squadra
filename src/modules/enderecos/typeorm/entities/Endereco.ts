@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import Bairro from '@modules/bairros/typeorm/entities/Bairro';
+import Pessoa from '@modules/pessoas/typeorm/entities/Pessoa';
+import { Column, Entity, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity('TB_ENDERECO')
 class Endereco {
@@ -22,6 +24,14 @@ class Endereco {
 
   @Column({ name: "CEP", type: 'varchar', length: 10 })
   cep: string;
+
+  @ManyToOne(() => Bairro)
+  @JoinColumn({name: "CODIGO_BAIRRO"})
+  bairro: Bairro;
+
+  @ManyToOne(() => Pessoa)
+  @JoinColumn({name: "CODIGO_PESSOA"})
+  pessoa: Pessoa;
 }
 
 export default Endereco;

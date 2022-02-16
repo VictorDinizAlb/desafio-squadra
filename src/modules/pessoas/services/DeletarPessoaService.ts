@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 import { PessoaRepository } from '../typeorm/repositories/PessoasRepository';
 
-class DeletarPessoaService {
+export default class DeletarPessoaService {
   public async execute(codigoPessoa: number): Promise<boolean> {
     const pessoasRepository = getCustomRepository(PessoaRepository);
     const pessoa = await pessoasRepository.procurarPorCodigo(codigoPessoa);
@@ -15,5 +15,3 @@ class DeletarPessoaService {
     return false;
   }
 }
-
-export default DeletarPessoaService;

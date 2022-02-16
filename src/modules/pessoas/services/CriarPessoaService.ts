@@ -2,7 +2,6 @@ import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Pessoa from '../typeorm/entities/Pessoa';
 import { PessoaRepository } from '../typeorm/repositories/PessoasRepository';
-import { EnderecoRepository } from 'src/modules/enderecos/typeorm/repositories/EnderecosRepository';
 
 interface IRequest {
   nome: string;

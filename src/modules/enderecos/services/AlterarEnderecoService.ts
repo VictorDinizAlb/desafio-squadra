@@ -42,7 +42,7 @@ export default class AlterarPessoaService {
           const { codigoBairro, nomeRua, numero, complemento, cep } =
             enderecosNovos[i];
 
-          await criarEndereco.execute(
+          await criarEndereco.executeComPessoa(
             codigoBairro,
             nomeRua,
             numero,
@@ -57,7 +57,7 @@ export default class AlterarPessoaService {
         const { codigoBairro, nomeRua, numero, complemento, cep } =
           enderecosNovos[i];
 
-        await criarEndereco.execute(
+        await criarEndereco.executeComPessoa(
           codigoBairro,
           nomeRua,
           numero,

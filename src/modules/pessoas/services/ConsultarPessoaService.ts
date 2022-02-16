@@ -1,4 +1,3 @@
-import PessoaTratadoPessoa from '@shared/classesTratadas/PessoaTratadoPessoa';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Pessoa from '../typeorm/entities/Pessoa';
@@ -7,7 +6,7 @@ import { PessoaRepository } from '../typeorm/repositories/PessoasRepository';
 export default class ConsultarPessoaService {
   public async procurarPorCodigo(
     codigoPessoa: any,
-  ): Promise<PessoaTratadoPessoa | AppError> {
+  ): Promise<Pessoa | AppError> {
     const pessoasRepository = getCustomRepository(PessoaRepository);
 
     const pessoa = await pessoasRepository.procurarPorCodigo(codigoPessoa);
@@ -17,14 +16,7 @@ export default class ConsultarPessoaService {
       return erro;
     }
 
-    // const pessoaTratado = pessoasRepository.trataResponse(pessoa);
+    return pessoa;
 
-    if (pessoa instanceof Pessoa) {
-      const pessoaCompleto = pessoasRepository.adicionaEndereco(pessoa);
-      return pessoaCompleto;
-    } else {
-      const erro = new AppError('Nao existe nenhum pessoa com este codigo.');
-      return erro;
-    }
   }
 }

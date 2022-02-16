@@ -1,4 +1,3 @@
-import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Pessoa from '../typeorm/entities/Pessoa';
 import { PessoaRepository } from '../typeorm/repositories/PessoasRepository';
@@ -22,12 +21,12 @@ export default class AlterarPessoaService {
     login,
     senha,
     status,
-  }: IRequest): Promise<Pessoa | boolean> {
+  }: IRequest): Promise<Pessoa | boolean | undefined> {
     const pessoasRepository = getCustomRepository(PessoaRepository);
 
     const pessoa = await pessoasRepository.procurarPorCodigo(codigoPessoa);
 
-    if (!pessoa) {
+    if (pessoa == undefined) {
       return true;
     }
 
